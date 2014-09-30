@@ -16,34 +16,32 @@ OpenFlowスイッチのパケット書き換えや転送(または破棄)の処�
 テストパターンファイルに記述された「期待する処理結果」の比較を行うことにより、
 OpenFlowスイッチのOpenFlow仕様への対応状況を検証するテストツールです。
 
-ツールは、OpenFlowバージョン1.3のFlowModメッセージおよびMeterModメッセージの
-試験に対応しています。
+ツールは、OpenFlowバージョン1.3ならびにバージョン1.4のFlowModメッセージ、
+MeterModメッセージ、およびGroupModメッセージの試験に対応しています。
 
 
 ============================== ================================
 試験対象メッセージ             対応パラメータ
 ============================== ================================
-OpenFlow1.3 FlowModメッセージ  match (IN_PHY_PORTを除く)
+FlowModメッセージ              match (IN_PHY_PORTを除く)
 
-                               actions (SET_QUEUE、GROUPを除く)
+                               actions (SET_QUEUEを除く)
 
-OpenFlow1.3 MeterModメッセージ すべて
+MeterModメッセージ             すべて
+GroupModメッセージ             すべて
 ============================== ================================
 
 
 印加するパケットの生成やパケット書き換え結果の確認などに「 :ref:`ch_packet_lib` 」を利用しています。
 
 
-動作概要
-^^^^^^^^
-
 試験実行イメージ
-""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 テストツールを実行した際の動作イメージを示します。テストパターンファイル
 には、「登録するフローエントリもしくはメーターエントリ」「印加パケット」
 「期待する処理結果」が記述されます。また、ツール実行のための環境設定に
-ついては後述( `ツール実行環境`_ を参照)します。
+ついては後述( `テストツールの実行環境`_ を参照)します。
 
 
 .. only:: latex
@@ -64,7 +62,7 @@ OpenFlow1.3 MeterModメッセージ すべて
 
 
 試験結果の出力イメージ
-""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 指定されたテストパターンファイルのテスト項目を順番に実行し、試験結果
 (OK／ERROR)を出力します。試験結果がERRORの場合はエラー詳細を併せて出力します。
@@ -106,120 +104,14 @@ OpenFlow1.3 MeterModメッセージ すべて
     OK(6) / ERROR(4)
 
 
-使用方法
---------
+テストツールの使用方法
+---------------------------------------------------------
 
 テストツールの使用方法を解説します。
 
 
-テストパターンファイル
-^^^^^^^^^^^^^^^^^^^^^^
-
-試験したいテストパターンに応じたテストパターンファイルを作成する必要が
-あります。
-
-テストパターンファイルは拡張子を「.json」としたテキストファイルです。
-以下の形式で記述します。
-
-
-.. rst-class:: sourcecode
-
-::
-
-    [
-        "xxxxxxxxxx",                    # 試験項目名
-        {
-            "description": "xxxxxxxxxx", # 試験内容の説明
-            "prerequisite": [
-                {
-                    "OFPFlowMod": {...}  # 登録するフローエントリもしくはメーターエントリ
-                },                       # (RyuのOFPFlowModもしくはOFPMeterModを
-                {                        #  json形式で記述)
-                    "OFPMeterMod": {...} #  期待する処理結果が
-                },                       #  パケット転送(actions=output)の場合は
-                {...}                    #  出力ポート番号に「2」を指定してください
-            ],
-            "tests": [
-                {
-                    # 印加パケット
-                    # 1回だけ印加するのか一定時間連続して印加し続けるのかに応じて
-                    # (A)(B)のいずれかを記述
-                    #  (A) 1回だけ印加
-                    "ingress": [
-                        "ethernet(...)", # (Ryuパケットライブラリのコンストラクタの形式で記述)
-                        "ipv4(...)",
-                        "tcp(...)"
-                    ],
-                    #  (B) 一定時間連続して印加
-                    "ingress": {
-                        "packets":{
-                            "data":[
-                                "ethernet(...)", # (A)と同じ
-                                "ipv4(...)",
-                                "tcp(...)"
-                            ],
-                            "pktps": 1000,       # 毎秒印加するパケット数を指定
-                            "duration_time": 30  # 連続印加時間を秒単位で指定
-                        }
-                    },
-
-                    # 期待する処理結果
-                    # 処理結果の種別に応じて(a)(b)(c)(d)のいずれかを記述
-                    #  (a) パケット転送(actions=output:X)の確認試験
-                    "egress": [          # 期待する転送パケット
-                        "ethernet(...)",
-                        "ipv4(...)",
-                        "tcp(...)"
-                    ]
-                    #  (b) パケットイン(actions=CONTROLLER)の確認試験
-                    "PACKET_IN": [       # 期待するPacket-Inデータ
-                        "ethernet(...)",
-                        "ipv4(...)",
-                        "tcp(...)"
-                    ]
-                    #  (c) table-missの確認試験
-                    "table-miss": [      # table-missとなることを期待するフローテーブルID
-                        0
-                    ]
-                    #  (d) パケット転送(actions=output:X)時スループットの確認試験
-                    "egress":[
-                        "throughput":[
-                            {
-                                "OFPMatch":{   # スループット計測用に
-                                  ...          # 補助SWに登録される
-                                },             # フローエントリのMatch条件
-                                "kbps":1000    # 期待するスループットをKbps単位で指定
-                            },
-                            {...},
-                            {...}
-                        ]
-                    ]
-                },
-                {...},
-                {...}
-            ]
-        },                               # 試験1
-        {...},                           # 試験2
-        {...}                            # 試験3
-    ]
-
-印加パケットとして「(B) 一定時間連続して印加」を、
-期待する処理結果として「(d) パケット転送(actions=output:X)時スループットの確認試験」を
-それぞれ記述することにより、試験対象SWのスループットを計測することができます。
-
-
-.. NOTE::
-
-    Ryuのソースツリーにはサンプルテストパターンとして、OpenFlow1.3 FlowMod
-    メッセージのmatch／actionsに指定できる各パラメータ、ならびにMeterMod
-    メッセージの各パラメータがそれぞれ正常に動作するかを確認する
-    テストパターンファイルが用意されています。
-
-        ryu/tests/switch/of13
-
-
-ツール実行環境
-^^^^^^^^^^^^^^
+テストツールの実行環境
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 テストツール実行のための環境は次のとおりです。
 
@@ -262,7 +154,6 @@ OpenFlow1.3 MeterModメッセージ すべて
     スクリプトの使用例を「 `テストツール使用例`_ 」に記載しています。
 
 
-
 テストツールの実行方法
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -272,7 +163,8 @@ OpenFlow1.3 MeterModメッセージ すべて
     ソースコード                    説明
     =============================== ===============================
     ryu/tests/switch/tester.py      テストツール
-    ryu/tests/switch/of13           テストパターンファイルのサンプル
+    ryu/tests/switch/of13           テストパターンファイルのサンプル(OpenFlow1.3用)
+    ryu/tests/switch/of14           テストパターンファイルのサンプル(OpenFlow1.4用)
     ryu/tests/switch/run_mininet.py 試験環境構築スクリプト
     =============================== ===============================
 
@@ -284,18 +176,22 @@ OpenFlow1.3 MeterModメッセージ すべて
 ::
 
     $ ryu-manager [--test-switch-target DPID] [--test-switch-tester DPID]
+     [--test-switch-target-version VERSION] [--test-switch-tester-version VERSION]
      [--test-switch-dir DIRECTORY] ryu/tests/switch/tester.py
 
-..
+.. tabularcolumns:: |l|p{20zw}|l|
 
-
-    ==================== ======================================== =====================
-    オプション           説明                                     デフォルト値
-    ==================== ======================================== =====================
-    --test-switch-target 試験対象スイッチのデータパスID           0000000000000001
-    --test-switch-tester 補助スイッチのデータパスID               0000000000000002
-    --test-switch-dir    テストパターンファイルのディレクトリパス ryu/tests/switch/of13
-    ==================== ======================================== =====================
+================================ ======================================== =====================
+オプション                       説明                                     デフォルト値
+================================ ======================================== =====================
+``--test-switch-target``         試験対象スイッチのデータパスID           0000000000000001
+``--test-switch-tester``         補助スイッチのデータパスID               0000000000000002
+``--test-switch-target-version`` 試験対象スイッチのOpenFlowバージョン     openflow13
+                                 ("openflow13"、"openflow14"が指定可能)
+``--test-switch-tester-version`` 補助スイッチのOpenFlowバージョン         openflow13
+                                 ("openflow13"、"openflow14"が指定可能)
+``--test-switch-dir``            テストパターンファイルのディレクトリパス ryu/tests/switch/of13
+================================ ======================================== =====================
 
 
 .. NOTE::
@@ -308,22 +204,32 @@ OpenFlow1.3 MeterModメッセージ すべて
 
 テストツールの起動後、試験対象スイッチと補助スイッチがコントローラに
 接続されると、指定したテストパターンファイルを元に試験が開始されます。
+接続されたスイッチのOpenFlowバージョンが指定したOpenFlowバージョンと
+異なる場合はその旨メッセージが表示され、正しいバージョンでの接続を待ちます。
 
 
 
 テストツール使用例
-------------------
+---------------------------------------------------------
 
-サンプルテストパターンやオリジナルのテストパターンファイルを用いた
-テストツールの実行手順を紹介します。
-
+サンプルテストパターンやオリジナルのテストパターンファイルを用いたテストツールの実行手順を紹介します。
 
 サンプルテストパターンの実行手順
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ryuのソースツリーのサンプルテストパターン(ryu/tests/switch/of13)を用いて、
-FlowModメッセージのmatch／actionsの一通りの動作確認ならびにMeterModメッセージ
-の動作確認を行う手順を示します。
+Ryuのソースツリーのサンプルテストパターン(ryu/tests/switch/of13)を用いた場合のテストツールの実行手順を示します。
+
+.. NOTE::
+
+    Ryuのソースツリーにはサンプルテストパターンとして、FlowModメッセージの
+    match／actionsに指定できる各パラメータ、ならびにMeterModメッセージの
+    各パラメータやGroupModメッセージの各パラメータがそれぞれ正常に動作するか
+    を確認するテストパターンファイルが、OpenFlow1.3向けとOpenFlow1.4向けに
+    用意されています。
+
+        ryu/tests/switch/of13
+
+        ryu/tests/switch/of14
 
 本手順では、試験環境を試験環境構築スクリプト(ryu/tests/switch/run_mininet.py)
 を用いて構築することとします。このため試験対象スイッチはOpen vSwitchとなります。
@@ -351,8 +257,8 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
 
         mininet> net
         c0
-        s1 lo:  s1-eth1:s2-eth1 s1-eth2:s2-eth2
-        s2 lo:  s2-eth1:s1-eth1 s2-eth2:s1-eth2
+        s1 lo:  s1-eth1:s2-eth1 s1-eth2:s2-eth2 s1-eth3:s2-eth3
+        s2 lo:  s2-eth1:s1-eth1 s2-eth2:s1-eth2 s2-eth3:s1-eth3
 
 
 
@@ -372,7 +278,10 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
     サンプルテストパターンのディレクトリ(ryu/tests/switch/of13)を指定します。
     なお、mininet環境の試験対象スイッチと補助スイッチのデータパスIDはそれぞれ
     --test-switch-target／--test-switch-testerオプションのデフォルト値と
-    なっているため、オプション指定を省略しています。
+    なっているため、オプション指定を省略しています。また、試験対象スイッチと
+    補助スイッチのOpenFlowバージョンはそれぞれ--test-switch-target-version／
+    --test-switch-tester-versionオプションのデフォルト値となっているため、
+    こちらもオプション指定を省略しています。
 
     Node: c0:
 
@@ -441,16 +350,18 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
     が完了すると、テストツールは終了します。
 
 
-<参考>
-""""""
+<参考>サンプルテストパターンファイル一覧
+""""""""""""""""""""""""""""""""""""""""""""""""
 
-    サンプルテストパターンファイル一覧
-
-        match／actionsの各設定項目に対応するフローエントリを登録し、
-        フローエントリにmatchする(またはmatchしない)複数パターンのパケット
-        を印加するテストパターンや、一定頻度以上の印加に対して破棄もしくは
-        優先度変更を行うメーターエントリを登録し、メーターエントリにmatch
-        するパケットを連続的に印加するテストパターンが用意されています。
+    match／actionsの各設定項目に対応するフローエントリを登録し、
+    フローエントリにmatchする(またはmatchしない)複数パターンのパケット
+    を印加するテストパターンや、一定頻度以上の印加に対して破棄もしくは
+    優先度変更を行うメーターエントリを登録し、メーターエントリにmatch
+    するパケットを連続的に印加するテストパターン、全ポートにFLOODINGする
+    type=ALLのグループエントリや振り分け条件によって出力先ポートを自動的
+    に変更するtype=SELECTのグループエントリを登録し、グループエントリに
+    matchするパケットを連続的に印加するテストパターンが、OpenFlow1.3用と
+    OpenFlow1.4用にそれぞれ用意されています。
 
 
     .. rst-class:: console
@@ -486,28 +397,33 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
         13_TCP_SRC_IPv4.json   22_ARP_SPA.json        37_PBB_ISID.json
         13_TCP_SRC_IPv6.json   23_ARP_TPA.json        38_TUNNEL_ID.json
 
+        ryu/tests/switch/of13/group:
+        00_ALL.json           01_SELECT_IP.json            01_SELECT_Weight_IP.json
+        01_SELECT_Ether.json  01_SELECT_Weight_Ether.json
+
         ryu/tests/switch/of13/match:
-        00_IN_PORT.json        13_TCP_SRC_IPv4.json   25_ARP_THA.json
-        02_METADATA.json       13_TCP_SRC_IPv6.json   25_ARP_THA_Mask.json
-        02_METADATA_Mask.json  14_TCP_DST_IPv4.json   26_IPV6_SRC.json
-        03_ETH_DST.json        14_TCP_DST_IPv6.json   26_IPV6_SRC_Mask.json
-        03_ETH_DST_Mask.json   15_UDP_SRC_IPv4.json   27_IPV6_DST.json
-        04_ETH_SRC.json        15_UDP_SRC_IPv6.json   27_IPV6_DST_Mask.json
-        04_ETH_SRC_Mask.json   16_UDP_DST_IPv4.json   28_IPV6_FLABEL.json
-        05_ETH_TYPE.json       16_UDP_DST_IPv6.json   29_ICMPV6_TYPE.json
-        06_VLAN_VID.json       17_SCTP_SRC_IPv4.json  30_ICMPV6_CODE.json
-        06_VLAN_VID_Mask.json  17_SCTP_SRC_IPv6.json  31_IPV6_ND_TARGET.json
-        07_VLAN_PCP.json       18_SCTP_DST_IPv4.json  32_IPV6_ND_SLL.json
-        08_IP_DSCP_IPv4.json   18_SCTP_DST_IPv6.json  33_IPV6_ND_TLL.json
-        08_IP_DSCP_IPv6.json   19_ICMPV4_TYPE.json    34_MPLS_LABEL.json
-        09_IP_ECN_IPv4.json    20_ICMPV4_CODE.json    35_MPLS_TC.json
-        09_IP_ECN_IPv6.json    21_ARP_OP.json         36_MPLS_BOS.json
-        10_IP_PROTO_IPv4.json  22_ARP_SPA.json        37_PBB_ISID.json
-        10_IP_PROTO_IPv6.json  22_ARP_SPA_Mask.json   37_PBB_ISID_Mask.json
-        11_IPV4_SRC.json       23_ARP_TPA.json        38_TUNNEL_ID.json
-        11_IPV4_SRC_Mask.json  23_ARP_TPA_Mask.json   38_TUNNEL_ID_Mask.json
-        12_IPV4_DST.json       24_ARP_SHA.json        39_IPV6_EXTHDR.json
-        12_IPV4_DST_Mask.json  24_ARP_SHA_Mask.json   39_IPV6_EXTHDR_Mask.json
+        00_IN_PORT.json        13_TCP_SRC_IPv6.json   26_IPV6_SRC.json
+        02_METADATA.json       14_TCP_DST_IPv4.json   26_IPV6_SRC_Mask.json
+        02_METADATA_Mask.json  14_TCP_DST_IPv6.json   27_IPV6_DST.json
+        03_ETH_DST.json        15_UDP_SRC_IPv4.json   27_IPV6_DST_Mask.json
+        03_ETH_DST_Mask.json   15_UDP_SRC_IPv6.json   28_IPV6_FLABEL.json
+        04_ETH_SRC.json        16_UDP_DST_IPv4.json   28_IPV6_FLABEL_Mask.json
+        04_ETH_SRC_Mask.json   16_UDP_DST_IPv6.json   29_ICMPV6_TYPE.json
+        05_ETH_TYPE.json       17_SCTP_SRC_IPv4.json  30_ICMPV6_CODE.json
+        06_VLAN_VID.json       17_SCTP_SRC_IPv6.json  31_IPV6_ND_TARGET.json
+        06_VLAN_VID_Mask.json  18_SCTP_DST_IPv4.json  32_IPV6_ND_SLL.json
+        07_VLAN_PCP.json       18_SCTP_DST_IPv6.json  33_IPV6_ND_TLL.json
+        08_IP_DSCP_IPv4.json   19_ICMPV4_TYPE.json    34_MPLS_LABEL.json
+        08_IP_DSCP_IPv6.json   20_ICMPV4_CODE.json    35_MPLS_TC.json
+        09_IP_ECN_IPv4.json    21_ARP_OP.json         36_MPLS_BOS.json
+        09_IP_ECN_IPv6.json    22_ARP_SPA.json        37_PBB_ISID.json
+        10_IP_PROTO_IPv4.json  22_ARP_SPA_Mask.json   37_PBB_ISID_Mask.json
+        10_IP_PROTO_IPv6.json  23_ARP_TPA.json        38_TUNNEL_ID.json
+        11_IPV4_SRC.json       23_ARP_TPA_Mask.json   38_TUNNEL_ID_Mask.json
+        11_IPV4_SRC_Mask.json  24_ARP_SHA.json        39_IPV6_EXTHDR.json
+        12_IPV4_DST.json       24_ARP_SHA_Mask.json   39_IPV6_EXTHDR_Mask.json
+        12_IPV4_DST_Mask.json  25_ARP_THA.json
+        13_TCP_SRC_IPv4.json   25_ARP_THA_Mask.json
 
         ryu/tests/switch/of13/meter:
         01_DROP_00_KBPS_00_1M.json      02_DSCP_REMARK_00_KBPS_00_1M.json
@@ -517,11 +433,81 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
         01_DROP_01_PKTPS_01_1000.json   02_DSCP_REMARK_01_PKTPS_01_1000.json
         01_DROP_01_PKTPS_02_10000.json  02_DSCP_REMARK_01_PKTPS_02_10000.json
 
+    .. rst-class:: console
 
-オリジナルテストパターンの実行手順
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ::
 
-次に、オリジナルのテストパターンを作成してテストツールを実行する手順を示します。
+        ryu/tests/switch/of14/action:
+        00_OUTPUT.json              20_POP_MPLS.json
+        11_COPY_TTL_OUT.json        23_SET_NW_TTL_IPv4.json
+        12_COPY_TTL_IN.json         23_SET_NW_TTL_IPv6.json
+        15_SET_MPLS_TTL.json        24_DEC_NW_TTL_IPv4.json
+        16_DEC_MPLS_TTL.json        24_DEC_NW_TTL_IPv6.json
+        17_PUSH_VLAN.json           25_SET_FIELD
+        17_PUSH_VLAN_multiple.json  26_PUSH_PBB.json
+        18_POP_VLAN.json            26_PUSH_PBB_multiple.json
+        19_PUSH_MPLS.json           27_POP_PBB.json
+        19_PUSH_MPLS_multiple.json
+
+        ryu/tests/switch/of14/action/25_SET_FIELD:
+        03_ETH_DST.json        14_TCP_DST_IPv6.json   26_IPV6_SRC.json
+        04_ETH_SRC.json        15_UDP_SRC_IPv4.json   27_IPV6_DST.json
+        05_ETH_TYPE.json       15_UDP_SRC_IPv6.json   28_IPV6_FLABEL.json
+        06_VLAN_VID.json       16_UDP_DST_IPv4.json   29_ICMPV6_TYPE.json
+        07_VLAN_PCP.json       16_UDP_DST_IPv6.json   30_ICMPV6_CODE.json
+        08_IP_DSCP_IPv4.json   17_SCTP_SRC_IPv4.json  31_IPV6_ND_TARGET.json
+        08_IP_DSCP_IPv6.json   17_SCTP_SRC_IPv6.json  32_IPV6_ND_SLL.json
+        09_IP_ECN_IPv4.json    18_SCTP_DST_IPv4.json  33_IPV6_ND_TLL.json
+        09_IP_ECN_IPv6.json    18_SCTP_DST_IPv6.json  34_MPLS_LABEL.json
+        10_IP_PROTO_IPv4.json  19_ICMPV4_TYPE.json    35_MPLS_TC.json
+        10_IP_PROTO_IPv6.json  20_ICMPV4_CODE.json    36_MPLS_BOS.json
+        11_IPV4_SRC.json       21_ARP_OP.json         37_PBB_ISID.json
+        12_IPV4_DST.json       22_ARP_SPA.json        38_TUNNEL_ID.json
+        13_TCP_SRC_IPv4.json   23_ARP_TPA.json        41_PBB_UCA.json
+        13_TCP_SRC_IPv6.json   24_ARP_SHA.json
+        14_TCP_DST_IPv4.json   25_ARP_THA.json
+
+        ryu/tests/switch/of14/group:
+        00_ALL.json           01_SELECT_IP.json            01_SELECT_Weight_IP.json
+        01_SELECT_Ether.json  01_SELECT_Weight_Ether.json
+
+        ryu/tests/switch/of14/match:
+        00_IN_PORT.json        13_TCP_SRC_IPv6.json   26_IPV6_SRC.json
+        02_METADATA.json       14_TCP_DST_IPv4.json   26_IPV6_SRC_Mask.json
+        02_METADATA_Mask.json  14_TCP_DST_IPv6.json   27_IPV6_DST.json
+        03_ETH_DST.json        15_UDP_SRC_IPv4.json   27_IPV6_DST_Mask.json
+        03_ETH_DST_Mask.json   15_UDP_SRC_IPv6.json   28_IPV6_FLABEL.json
+        04_ETH_SRC.json        16_UDP_DST_IPv4.json   28_IPV6_FLABEL_Mask.json
+        04_ETH_SRC_Mask.json   16_UDP_DST_IPv6.json   29_ICMPV6_TYPE.json
+        05_ETH_TYPE.json       17_SCTP_SRC_IPv4.json  30_ICMPV6_CODE.json
+        06_VLAN_VID.json       17_SCTP_SRC_IPv6.json  31_IPV6_ND_TARGET.json
+        06_VLAN_VID_Mask.json  18_SCTP_DST_IPv4.json  32_IPV6_ND_SLL.json
+        07_VLAN_PCP.json       18_SCTP_DST_IPv6.json  33_IPV6_ND_TLL.json
+        08_IP_DSCP_IPv4.json   19_ICMPV4_TYPE.json    34_MPLS_LABEL.json
+        08_IP_DSCP_IPv6.json   20_ICMPV4_CODE.json    35_MPLS_TC.json
+        09_IP_ECN_IPv4.json    21_ARP_OP.json         36_MPLS_BOS.json
+        09_IP_ECN_IPv6.json    22_ARP_SPA.json        37_PBB_ISID.json
+        10_IP_PROTO_IPv4.json  22_ARP_SPA_Mask.json   37_PBB_ISID_Mask.json
+        10_IP_PROTO_IPv6.json  23_ARP_TPA.json        38_TUNNEL_ID.json
+        11_IPV4_SRC.json       23_ARP_TPA_Mask.json   38_TUNNEL_ID_Mask.json
+        11_IPV4_SRC_Mask.json  24_ARP_SHA.json        39_IPV6_EXTHDR.json
+        12_IPV4_DST.json       24_ARP_SHA_Mask.json   39_IPV6_EXTHDR_Mask.json
+        12_IPV4_DST_Mask.json  25_ARP_THA.json        41_PBB_UCA.json
+        13_TCP_SRC_IPv4.json   25_ARP_THA_Mask.json
+
+        ryu/tests/switch/of14/meter:
+        01_DROP_00_KBPS_00_1M.json      02_DSCP_REMARK_00_KBPS_00_1M.json
+        01_DROP_00_KBPS_01_10M.json     02_DSCP_REMARK_00_KBPS_01_10M.json
+        01_DROP_00_KBPS_02_100M.json    02_DSCP_REMARK_00_KBPS_02_100M.json
+        01_DROP_01_PKTPS_00_100.json    02_DSCP_REMARK_01_PKTPS_00_100.json
+        01_DROP_01_PKTPS_01_1000.json   02_DSCP_REMARK_01_PKTPS_01_1000.json
+        01_DROP_01_PKTPS_02_10000.json  02_DSCP_REMARK_01_PKTPS_02_10000.json
+
+
+オリジナルのテストパターンの実行手順
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+オリジナルのテストパターンを作成してテストツールを実行する手順を示します。
 
 例として、OpenFlowスイッチがルータ機能を実現するために必要なmatch／actionsを
 処理する機能を備えているかを確認するテストパターンを作成します。
@@ -547,6 +533,12 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
 
 
     このテストパターンを実行するテストパターンファイルを作成します。
+
+    作成例を以下に示します。
+
+    .. NOTE::
+
+        テストパターンファイルの具体的な記述方法については「 `テストパターンファイルの記述方法`_ 」を参考ください。
 
 
 ファイル名： ``sample_test_pattern.json``
@@ -719,10 +711,249 @@ VMイメージ利用のための環境設定やログイン方法等は「 :ref:
          cookie=0x0, duration=56.217s, table=0, n_packets=1, n_bytes=73, priority=0,ip,nw_dst=192.168.30.0/24 actions=set_field:aa:aa:aa:aa:aa:aa->eth_src,set_field:bb:bb:bb:bb:bb:bb->eth_dst,dec_ttl,output:2
 
 
+テストパターンファイルの記述方法
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+テストパターンファイルは拡張子を「.json」としたテキストファイルです。
+以下の形式で記述します。
+
+.. rst-class:: sourcecode
+
+::
+
+    [
+        "xxxxxxxxxx",                    # 試験項目名
+        {
+            "description": "xxxxxxxxxx", # 試験内容の説明
+            "prerequisite": [
+                {
+                    "OFPFlowMod": {...}  # 登録するフローエントリ、メーターエントリ、グループエントリ
+                },                       # (RyuのOFPFlowMod、OFPMeterMod、OFPGroupModをjson形式で記述)
+                {                        #
+                    "OFPMeterMod": {...} # フローエントリで期待する処理結果が
+                },                       # パケット転送(actions=output)の場合は
+                {                        # 出力ポート番号に「2」を指定してください
+                    "OFPGroupMod": {...} # グループエントリでパケット転送を行う場合は
+                },                       # 出力ポート番号には「2」もしくは「3」を
+                {...}                    # 指定してください
+            ],
+            "tests": [
+                {
+                    # 印加パケット
+                    # 1回だけ印加するのか一定時間連続して印加し続けるのかに応じて
+                    # (A)(B)のいずれかを記述
+                    #  (A) 1回だけ印加
+                    "ingress": [
+                        "ethernet(...)", # (Ryuパケットライブラリのコンストラクタの形式で記述)
+                        "ipv4(...)",
+                        "tcp(...)"
+                    ],
+                    #  (B) 一定時間連続して印加
+                    "ingress": {
+                        "packets":{
+                            "data":[
+                                "ethernet(...)", # (A)と同じ
+                                "ipv4(...)",
+                                "tcp(...)"
+                            ],
+                            "pktps": 1000,       # 毎秒印加するパケット数を指定
+                            "duration_time": 30  # 連続印加時間を秒単位で指定
+                        }
+                    },
+
+                    # 期待する処理結果
+                    # 処理結果の種別に応じて(a)(b)(c)(d)のいずれかを記述
+                    #  (a) パケット転送(actions=output:X)の確認試験
+                    "egress": [          # 期待する転送パケット
+                        "ethernet(...)",
+                        "ipv4(...)",
+                        "tcp(...)"
+                    ]
+                    #  (b) パケットイン(actions=CONTROLLER)の確認試験
+                    "PACKET_IN": [       # 期待するPacket-Inデータ
+                        "ethernet(...)",
+                        "ipv4(...)",
+                        "tcp(...)"
+                    ]
+                    #  (c) table-missの確認試験
+                    "table-miss": [      # table-missとなることを期待するフローテーブルID
+                        0
+                    ]
+                    #  (d) パケット転送(actions=output:X)時スループットの確認試験
+                    "egress":[
+                        "throughput":[
+                            {
+                                "OFPMatch":{   # スループット計測用に
+                                  ...          # 補助SWに登録される
+                                },             # フローエントリのMatch条件
+                                "kbps":1000    # 期待するスループットをKbps単位で指定
+                            },
+                            {...},
+                            {...}
+                        ]
+                    ]
+                },
+                {...},
+                {...}
+            ]
+        },                               # 試験1
+        {...},                           # 試験2
+        {...}                            # 試験3
+    ]
+
+
+印加パケットとして「(B) 一定時間連続して印加」を、
+期待する処理結果として「(d) パケット転送(actions=output:X)時スループットの確認試験」を
+それぞれ記述することにより、試験対象SWのスループットを計測することができます。
+
+テストパターンファイルで指定する入力/出力ポート番号の数値の意味については、「 `＜参考＞印加パケットの転送イメージ`_ 」を参考ください。
+
+
+＜参考＞印加パケットの転送イメージ
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+
+試験対象SW及び補助SWのポートは以下の用途で利用します。
+
+
+.. only:: latex
+
+    .. image:: images/switch_test_tool/fig3.eps
+        :align: center
+
+.. only:: epub
+
+    .. image:: images/switch_test_tool/fig3.png
+        :align: center
+
+.. only:: not latex and not epub
+
+    .. image:: images/switch_test_tool/fig3.png
+        :scale: 60 %
+        :align: center
+
+Flow_modメッセージ/Meter_modメッセージのテストを実施する場合の印加パケットの転送イメージは以下のとおりです。
+
+１．補助SWのパケット送信用ポート（ポート番号１）からパケットを送出
+
+２．試験対象SWのパケット受信用ポート（ポート番号１）パケットを受信
+
+３．試験対象SWのパケット送信用ポート１（ポート番号２）からパケットを送信
+
+４．補助SWのパケット受信用ポート１（ポート番号２）でパケットを受信
+
+.. only:: latex
+
+    .. image:: images/switch_test_tool/fig4.eps
+        :align: center
+
+.. only:: epub
+
+    .. image:: images/switch_test_tool/fig4.png
+        :align: center
+
+.. only:: not latex and not epub
+
+    .. image:: images/switch_test_tool/fig4.png
+        :scale: 60 %
+        :align: center
+
+Group_modメッセージのテストを実施する場合の印加パケットの転送イメージは以下のとおりです。
+
+１．補助SWのパケット送信用ポート（ポート番号１）からパケットを送出
+
+２．試験対象SWのパケット受信用ポート（ポート番号１）でパケットを受信
+
+３．試験対象SWのパケット送信用ポート１（ポート番号２）或いは、試験対象SWのパケット送信用ポート２（ポート番号３）からパケットを送信
+
+４．補助SWのパケット受信用ポート１（ポート番号２）或いは、補助SWのパケット受信用ポート２（ポート番号３）でパケットを受信
+
+.. only:: latex
+
+    .. image:: images/switch_test_tool/fig5.eps
+        :align: center
+
+.. only:: epub
+
+    .. image:: images/switch_test_tool/fig5.png
+        :align: center
+
+.. only:: not latex and not epub
+
+    .. image:: images/switch_test_tool/fig5.png
+        :scale: 60 %
+        :align: center
+
+図の通り、Group_modメッセージのテストを実施するケースのみ、試験対象SWのパケット送信用ポート２及び補助SWのパケット受信用ポート２を利用する場合があります。
+
+
+ポート番号の変更方法
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+用意する環境のOpenFlowスイッチのポート番号が「 `テストツールの実行環境`_ 」と異なる場合、テストツール実行時にオプションを指定することでテストで利用するポート番号を変更することが可能です。
+
+ポート番号を変更するためのオプションは次のとおりです。
+
+.. tabularcolumns:: |l|p{20zw}|l|
+
+
+===================================== ============================================================ ========================
+オプション                             説明                                                         デフォルト値
+===================================== ============================================================ ========================
+``--test-switch-target_recv_port``    試験対象スイッチのパケット受信用ポートのポート番号             1
+``--test-switch-target_send_port_1``  試験対象スイッチのパケット送信用ポート１のポート番号           2
+``--test-switch-target_send_port_2``  試験対象スイッチのパケット送信用ポート２のポート番号           3
+``--test-switch-tester_send_port``    補助スイッチのパケット送信用ポートのポート番号                 1
+``--test-switch-tester_recv_port_1``  補助スイッチのパケット受信用ポート１のポート番号               2
+``--test-switch-tester_recv_port_2``  補助スイッチのパケット受信用ポート２のポート番号               3
+===================================== ============================================================ ========================
+
+本オプションによってポート番号を変更する場合には、テストパターンファイル中のポート番号の値を変更する必要がある点に注意してください。
+
+
+<参考>テストパターンファイルの記述方法に関する補足
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    テストパターンファイル中のポート番号の値を指定する箇所にオプション引数の設定名を指定すると、
+    テストツール実行時に本値がオプション引数の値に置き換わります。
+    例えば、以下のようにテストパターンファイルを記述します。
+
+    .. rst-class:: sourcecode
+
+    ::
+
+                                               "OFPActionOutput": {
+                                                   "port":"target_send_port_1"
+                                               }
+
+    次に、以下のようにテストツールを実行します。
+
+    .. rst-class:: console
+
+    ::
+
+            root@ryu-vm:~$ ryu-manager --test-switch-target_send_port_1 30 ryu/ryu/tests/switch/tester.py
+
+    すると、テストパターンファイルの該当の箇所は、以下のように置き換わってテストツールに解釈されます。
+
+    .. rst-class:: sourcecode
+
+    ::
+
+                                               "OFPActionOutput": {
+                                                   "port":30
+                                               }
+
+    これによって、テストパターンファイル中のポート番号の値を、
+    テストツール実行時に決定することが可能となります。
+
+
 エラーメッセージ一覧
-^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 本ツールで出力されるエラーメッセージの一覧を示します。
+
+.. tabularcolumns:: |p{23zw}|p{23zw}|
 
 ======================================================================== ============================================================================================================
 エラーメッセージ                                                         説明
@@ -737,12 +968,17 @@ Failed to add flows to tester_sw: barrier request timeout.               補助S
 Failed to add flows to tester_sw: [err_msg]                              補助SWに対するフローエントリ登録に失敗(FlowModに対するErrorメッセージ受信)
 Failed to add meters: barrier request timeout.                           試験対象SWに対するメーターエントリ登録に失敗(Barrier Requestのタイムアウト)
 Failed to add meters: [err_msg]                                          試験対象SWに対するメーターエントリ登録に失敗(MeterModに対するErrorメッセージ受信)
+Failed to add groups: barrier request timeout.                           試験対象SWに対するグループエントリ登録に失敗(Barrier Requestのタイムアウト)
+Failed to add groups: [err_msg]                                          試験対象SWに対するグループエントリ登録に失敗(GroupModに対するErrorメッセージ受信)
 Added incorrect flows: [flows]                                           試験対象SWに対するフローエントリ登録確認エラー(想定外のフローエントリが登録された)
 Failed to add flows: flow stats request timeout.                         試験対象SWに対するフローエントリ登録確認に失敗(FlowStats Requestのタイムアウト)
 Failed to add flows: [err_msg]                                           試験対象SWに対するフローエントリ登録確認に失敗(FlowStats Requestに対するErrorメッセージ受信)
 Added incorrect meters: [meters]                                         試験対象SWに対するメーターエントリ登録確認エラー(想定外のメーターエントリが登録された)
 Failed to add meters: meter config stats request timeout.                試験対象SWに対するメーターエントリ登録確認に失敗(MeterConfigStats Requestのタイムアウト)
 Failed to add meters: [err_msg]                                          試験対象SWに対するメーターエントリ登録確認に失敗(MeterConfigStats Requestに対するErrorメッセージ受信)
+Added incorrect groups: [groups]                                         試験対象SWに対するグループエントリ登録確認エラー(想定外のグループエントリが登録された)
+Failed to add groups: group desc stats request timeout.                  試験対象SWに対するグループエントリ登録確認に失敗(GroupDescStats Requestのタイムアウト)
+Failed to add groups: [err_msg]                                          試験対象SWに対するグループエントリ登録確認に失敗(GroupDescStats Requestに対するErrorメッセージ受信)
 Failed to request port stats from target: request timeout.               試験対象SWのPortStats取得に失敗(PortStats Requestのタイムアウト)
 Failed to request port stats from target: [err_msg]                      試験対象SWのPortStats取得に失敗(PortStats Requestに対するErrorメッセージ受信)
 Failed to request port stats from tester: request timeout.               補助SWのPortStats取得に失敗(PortStats Requestのタイムアウト)
