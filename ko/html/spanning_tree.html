@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -66,7 +64,7 @@
 <p>STP (spanning tree protocol : IEEE 802.1D) 네트워크를 논리적 트리로 취급하고,
 각 스위치 (장에서는 브리지이라고 부를 수 있습니다) 포트를 프레임 전송 가능 또는 불가능 상태로 설정하는 것으로,
 루프 구조를 가진 네트워크에서 브로드 캐스트 폭풍의 발생을 억제합니다.</p>
-<a class="reference internal image-reference" href="_images/fig16.png"><img alt="_images/fig16.png" class="align-center" src="_images/fig16.png" style="width: 676.0px; height: 256.0px;" /></a>
+<a class="reference internal image-reference" href="_images/fig16.png"><img alt="_images/fig16.png" class="align-center" src="_images/fig16.png" /></a>
 <p>STP는 브리지간에 BPDU (Bridge Protocol Data Unit) 패킷을 상호 교환
 하고 브리지와 포트 정보를 비교 함으로서,
 각 포트의 프레임 전송 여부를 결정합니다.</p>
@@ -126,7 +124,7 @@ BPDU 패킷을 전송하고 다른 브리지가 루트 브리지에서 수신 �
 </li>
 </ul>
 </div></blockquote>
-<a class="reference internal image-reference" href="_images/fig23.png"><img alt="_images/fig23.png" class="align-center" src="_images/fig23.png" style="width: 408.0px; height: 293.5px;" /></a>
+<a class="reference internal image-reference" href="_images/fig23.png"><img alt="_images/fig23.png" class="align-center" src="_images/fig23.png" /></a>
 <div class="admonition note">
 <p class="first admonition-title">주석</p>
 <p>루트 브리지까지의 비용은 각 포트에서 수신 한 BPDU 패킷
@@ -168,7 +166,7 @@ path cost 값을 BPDU 패킷의 root path cost 값에 더합니다.
 그런 다음에 나타내는 상태 전환을 실시해, 최종적으로 각 포트의 역할에 따라
 FORWARD 상태 또는 BLOCK 상태로 전환합니다. 구성에서 사용할 포트 및 설정
 된 포트는 DISABLE 상태가되고, 이후 상태 전환되지 않습니다.</div></blockquote>
-<a class="reference internal image-reference" href="_images/fig33.png"><img alt="_images/fig33.png" class="align-center" src="_images/fig33.png" style="width: 634.0px; height: 199.5px;" /></a>
+<a class="reference internal image-reference" href="_images/fig33.png"><img alt="_images/fig33.png" class="align-center" src="_images/fig33.png" /></a>
 <p>각 포트는 상태에 따라 프레임 전송 여부 등의 동작을 결정합니다.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -410,9 +408,9 @@ simple_switch_stp_13.py을 만들합니다. 이 프로그램은
 </div>
 <p>VM 환경에서이 프로그램을 실행하면 스위치 s1, s2, s3 사이에서 루프가
 존재하는 토폴로지가 됩니다.</p>
-<a class="reference internal image-reference" href="_images/fig43.png"><img alt="_images/fig43.png" class="align-center" src="_images/fig43.png" style="width: 407.5px; height: 285.5px;" /></a>
+<a class="reference internal image-reference" href="_images/fig43.png"><img alt="_images/fig43.png" class="align-center" src="_images/fig43.png" /></a>
 <p>net 명령의 실행 결과는 다음과 같습니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ sudo ./spanning_tree.py
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ sudo ./spanning_tree.py
 Unable to contact the remote controller at 127.0.0.1:6633
 mininet&gt; net
 c0
@@ -421,7 +419,8 @@ s2 lo:  s2-eth1:h2-eth0 s2-eth2:s1-eth2 s2-eth3:s3-eth2
 s3 lo:  s3-eth1:h3-eth0 s3-eth2:s2-eth3 s3-eth3:s1-eth3
 h1 h1-eth0:s1-eth1
 h2 h2-eth0:s2-eth1
-h3 h3-eth0:s3-eth1</pre>
+h3 h3-eth0:s3-eth1
+</pre></div>
 </div>
 </div>
 <div class="section" id="openflow">
@@ -429,13 +428,16 @@ h3 h3-eth0:s3-eth1</pre>
 <p>사용하는 OpenFlow 버전을 1.3으로 설정합니다.
 이 명령 입력 스위치 s1, s2, s3의 xterm에서 실시해주세요.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13
+</pre></div>
 </div>
 <p>Node: s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s2 protocols=OpenFlow13</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s2 protocols=OpenFlow13
+</pre></div>
 </div>
 <p>Node: s3:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s3 protocols=OpenFlow13</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s3 protocols=OpenFlow13
+</pre></div>
 </div>
 </div>
 <div class="section" id="id4">
@@ -443,20 +445,21 @@ h3 h3-eth0:s3-eth1</pre>
 <p>준비 하였으므로 Ryu 응용 프로그램을 실행합니다. 윈도우 제목이
 「Node: c0 (root)」이다 xterm에서 다음 명령을 실행합니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~$ ryu-manager ./simple_switch_stp_13.py
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~$ ryu-manager ./simple_switch_stp_13.py
 loading app simple_switch_stp_13.py
 loading app ryu.controller.ofp_handler
 loading app ryu.controller.ofp_handler
 instantiating app None of Stp
 creating context stplib
 instantiating app simple_switch_stp_13.py of SimpleSwitch13
-instantiating app ryu.controller.ofp_handler of OFPHandler</pre>
+instantiating app ryu.controller.ofp_handler of OFPHandler
+</pre></div>
 </div>
 <div class="section" id="openflow-stp">
 <h4>OpenFlow 스위치 시작 STP 계산<a class="headerlink" href="#openflow-stp" title="제목 주소">¶</a></h4>
 <p>각 OpenFlow 스위치와 컨트롤러의 연결이 완료되면 BPDU 패킷의 교환이
 시작 루트 브리지 선출 포트 역할 설정 포트 상태 천이가 이루어집니다.</p>
-<div class="console highlight-python"><pre>[STP][INFO] dpid=0000000000000001: Join as stp bridge.
+<div class="console highlight-python"><div class="highlight"><pre>[STP][INFO] dpid=0000000000000001: Join as stp bridge.
 [STP][INFO] dpid=0000000000000001: [port=1] DESIGNATED_PORT     / LISTEN
 [STP][INFO] dpid=0000000000000001: [port=2] DESIGNATED_PORT     / LISTEN
 [STP][INFO] dpid=0000000000000001: [port=3] DESIGNATED_PORT     / LISTEN
@@ -541,25 +544,29 @@ instantiating app ryu.controller.ofp_handler of OFPHandler</pre>
 [STP][INFO] dpid=0000000000000003: [port=3] ROOT_PORT           / FORWARD
 [STP][INFO] dpid=0000000000000001: [port=1] DESIGNATED_PORT     / FORWARD
 [STP][INFO] dpid=0000000000000001: [port=2] DESIGNATED_PORT     / FORWARD
-[STP][INFO] dpid=0000000000000001: [port=3] DESIGNATED_PORT     / FORWARD</pre>
+[STP][INFO] dpid=0000000000000001: [port=3] DESIGNATED_PORT     / FORWARD
+</pre></div>
 </div>
 <p>이 결과, 최종적으로 각 포트는 FORWARD 상태 또는 BLOCK 상태입니다.</p>
-<a class="reference internal image-reference" href="_images/fig51.png"><img alt="_images/fig51.png" class="align-center" src="_images/fig51.png" style="width: 400.5px; height: 286.5px;" /></a>
+<a class="reference internal image-reference" href="_images/fig51.png"><img alt="_images/fig51.png" class="align-center" src="_images/fig51.png" /></a>
 <p>패킷이 루프하지 않는다는 것을 확인하기 위해 호스트 1에서 호스트 2로 ping을 실행합니다.</p>
 <p>ping 명령을 실행하기 전에
 tcpdump 명령을 실행해야합니다.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -i s1-eth2 arp</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -i s1-eth2 arp
+</pre></div>
 </div>
 <p>Node: s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -i s2-eth2 arp</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -i s2-eth2 arp
+</pre></div>
 </div>
 <p>Node: s3:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -i s3-eth2 arp</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -i s3-eth2 arp
+</pre></div>
 </div>
 <p>토폴로지 작성 스크립트를 실행 한 콘솔에서 다음 명령을 실행
 호스트 1에서 호스트 2로 ping을 실행합니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; h1 ping h2
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; h1 ping h2
 PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 64 bytes from 10.0.0.2: icmp_req=1 ttl=64 time=84.4 ms
 64 bytes from 10.0.0.2: icmp_req=2 ttl=64 time=0.657 ms
@@ -575,36 +582,40 @@ PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 ^C
 --- 10.0.0.2 ping statistics ---
 11 packets transmitted, 11 received, 0% packet loss, time 9998ms
-rtt min/avg/max/mdev = 0.041/7.784/84.407/24.230 ms</pre>
+rtt min/avg/max/mdev = 0.041/7.784/84.407/24.230 ms
+</pre></div>
 </div>
 <p>tcpdump의 출력에서 ARP 루프하지 않을 수
 확인할 수 있습니다.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -i s1-eth2 arp
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -i s1-eth2 arp
 tcpdump: WARNING: s1-eth2: no IPv4 address assigned
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on s1-eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
 11:30:24.692797 ARP, Request who-has 10.0.0.2 tell 10.0.0.1, length 28
 11:30:24.749153 ARP, Reply 10.0.0.2 is-at 82:c9:d7:e9:b7:52 (oui Unknown), length 28
 11:30:29.797665 ARP, Request who-has 10.0.0.1 tell 10.0.0.2, length 28
-11:30:29.798250 ARP, Reply 10.0.0.1 is-at c2:a4:54:83:43:fa (oui Unknown), length 28</pre>
+11:30:29.798250 ARP, Reply 10.0.0.1 is-at c2:a4:54:83:43:fa (oui Unknown), length 28
+</pre></div>
 </div>
 <p>Node: s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -i s2-eth2 arp
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -i s2-eth2 arp
 tcpdump: WARNING: s2-eth2: no IPv4 address assigned
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on s2-eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
 11:30:24.692824 ARP, Request who-has 10.0.0.2 tell 10.0.0.1, length 28
 11:30:24.749116 ARP, Reply 10.0.0.2 is-at 82:c9:d7:e9:b7:52 (oui Unknown), length 28
 11:30:29.797659 ARP, Request who-has 10.0.0.1 tell 10.0.0.2, length 28
-11:30:29.798254 ARP, Reply 10.0.0.1 is-at c2:a4:54:83:43:fa (oui Unknown), length 28</pre>
+11:30:29.798254 ARP, Reply 10.0.0.1 is-at c2:a4:54:83:43:fa (oui Unknown), length 28
+</pre></div>
 </div>
 <p>Node: s3:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -i s3-eth2 arp
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -i s3-eth2 arp
 tcpdump: WARNING: s3-eth2: no IPv4 address assigned
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on s3-eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
-11:30:24.698477 ARP, Request who-has 10.0.0.2 tell 10.0.0.1, length 28</pre>
+11:30:24.698477 ARP, Request who-has 10.0.0.2 tell 10.0.0.1, length 28
+</pre></div>
 </div>
 </div>
 <div class="section" id="stp">
@@ -613,10 +624,11 @@ listening on s3-eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
 각 OpenFlow 스위치 시작 후 STP 계산이 완료된 상태에서 다음 명령을 실행하여
 포트를 다운시킵니다.</p>
 <p>Node: s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ifconfig s2-eth2 down</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ifconfig s2-eth2 down
+</pre></div>
 </div>
 <p>링크 다운이 감지되고 STP 재 계산이 실행됩니다.</p>
-<div class="console highlight-python"><pre>[STP][INFO] dpid=0000000000000002: [port=2] Link down.
+<div class="console highlight-python"><div class="highlight"><pre>[STP][INFO] dpid=0000000000000002: [port=2] Link down.
 [STP][INFO] dpid=0000000000000002: [port=2] DESIGNATED_PORT     / DISABLE
 [STP][INFO] dpid=0000000000000002: [port=1] DESIGNATED_PORT     / BLOCK
 [STP][INFO] dpid=0000000000000002: [port=3] DESIGNATED_PORT     / BLOCK
@@ -658,21 +670,23 @@ listening on s3-eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
 [STP][INFO] dpid=0000000000000003: [port=2] DESIGNATED_PORT     / FORWARD
 [STP][INFO] dpid=0000000000000003: [port=3] ROOT_PORT           / FORWARD
 [STP][INFO] dpid=0000000000000002: [port=1] DESIGNATED_PORT     / FORWARD
-[STP][INFO] dpid=0000000000000002: [port=3] ROOT_PORT           / FORWARD</pre>
+[STP][INFO] dpid=0000000000000002: [port=3] ROOT_PORT           / FORWARD
+</pre></div>
 </div>
 <p>지금까지 BLOCK 상태였다 s3-eth2 포트가 FORWARD 상태가되고,
 다시 프레임 전송 가능한 상태가 된 것을 확인할 수 있습니다.</p>
-<a class="reference internal image-reference" href="_images/fig6.png"><img alt="_images/fig6.png" class="align-center" src="_images/fig6.png" style="width: 404.5px; height: 300.0px;" /></a>
+<a class="reference internal image-reference" href="_images/fig6.png"><img alt="_images/fig6.png" class="align-center" src="_images/fig6.png" /></a>
 </div>
 <div class="section" id="id5">
 <h4>고장 복구시 STP 재 계산<a class="headerlink" href="#id5" title="제목 주소">¶</a></h4>
 <p>계속 링크 다운이 재개 될 때의 STP 재 계산의 동작을 확인합니다.
 링크 다운 된 상태에서 다음 명령을 실행하여 포트를 활성화시킵니다.</p>
 <p>Node: s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ifconfig s2-eth2 up</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ifconfig s2-eth2 up
+</pre></div>
 </div>
 <p>링크 복구가 감지되고 STP 재 계산이 실행됩니다.</p>
-<div class="console highlight-python"><pre>[STP][INFO] dpid=0000000000000002: [port=2] Link down.
+<div class="console highlight-python"><div class="highlight"><pre>[STP][INFO] dpid=0000000000000002: [port=2] Link down.
 [STP][INFO] dpid=0000000000000002: [port=2] DESIGNATED_PORT     / DISABLE
 [STP][INFO] dpid=0000000000000002: [port=2] Link up.
 [STP][INFO] dpid=0000000000000002: [port=2] DESIGNATED_PORT     / LISTEN
@@ -719,11 +733,12 @@ listening on s3-eth2, link-type EN10MB (Ethernet), capture size 65535 bytes
 [STP][INFO] dpid=0000000000000002: [port=3] DESIGNATED_PORT     / FORWARD
 [STP][INFO] dpid=0000000000000003: [port=1] DESIGNATED_PORT     / FORWARD
 [STP][INFO] dpid=0000000000000003: [port=2] NON_DESIGNATED_PORT / BLOCK
-[STP][INFO] dpid=0000000000000003: [port=3] ROOT_PORT           / FORWARD</pre>
+[STP][INFO] dpid=0000000000000003: [port=3] ROOT_PORT           / FORWARD
+</pre></div>
 </div>
 <p>응용 프로그램 시작시와 같은 트리 구성이 다시 프레임 전송 가능
 상태가 된 것을 확인할 수 있습니다.</p>
-<a class="reference internal image-reference" href="_images/fig71.png"><img alt="_images/fig71.png" class="align-center" src="_images/fig71.png" style="width: 404.5px; height: 297.5px;" /></a>
+<a class="reference internal image-reference" href="_images/fig71.png"><img alt="_images/fig71.png" class="align-center" src="_images/fig71.png" /></a>
 </div>
 </div>
 </div>
@@ -835,7 +850,7 @@ OpenFlow 1.3에 대응 한 simple_switch_stp_13.py 기반으로 응용 프로그
 <h3>라이브러리의 구현<a class="headerlink" href="#id8" title="제목 주소">¶</a></h3>
 <div class="section" id="id9">
 <h4>라이브러리 개요<a class="headerlink" href="#id9" title="제목 주소">¶</a></h4>
-<a class="reference internal image-reference" href="_images/fig81.png"><img alt="_images/fig81.png" class="align-center" src="_images/fig81.png" style="width: 448.4px; height: 281.6px;" /></a>
+<a class="reference internal image-reference" href="_images/fig81.png"><img alt="_images/fig81.png" class="align-center" src="_images/fig81.png" /></a>
 <p>STP 라이브러리 (Stp 클래스 인스턴스)가 OpenFlow 스위치 컨트롤러
 연결을 감지하면 Bridge 클래스 인스턴스 Port 클래스 인스턴스가
 생성됩니다. 각 클래스 인스턴스가 생성 · 시작 된 후에는</p>
@@ -860,49 +875,31 @@ OpenFlow 1.3에 대응 한 simple_switch_stp_13.py 기반으로 응용 프로그
 <col width="15%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">항목</p>
-</th>
-<th class="head"><p class="first last">설명</p>
-</th>
-<th class="head"><p class="first last">기본값</p>
-</th>
+<tr class="row-odd"><th class="head">항목</th>
+<th class="head">설명</th>
+<th class="head">기본값</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">priority</span></tt></p>
-</td>
-<td><p class="first last">브리지 우선 순위</p>
-</td>
-<td><p class="first last">0x8000</p>
-</td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">priority</span></tt></td>
+<td>브리지 우선 순위</td>
+<td>0x8000</td>
 </tr>
-<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">sys_ext_id</span></tt></p>
-</td>
-<td><p class="first last">VLAN-ID 설정 (* 현재 STP 라이브러리는 VLAN 비인식)</p>
-</td>
-<td><p class="first last">0</p>
-</td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">sys_ext_id</span></tt></td>
+<td>VLAN-ID 설정 (* 현재 STP 라이브러리는 VLAN 비인식)</td>
+<td>0</td>
 </tr>
-<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">max_age</span></tt></p>
-</td>
-<td><p class="first last">BPDU 패킷의 수신 타이머 값</p>
-</td>
-<td><p class="first last">20[sec]</p>
-</td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">max_age</span></tt></td>
+<td>BPDU 패킷의 수신 타이머 값</td>
+<td>20[sec]</td>
 </tr>
-<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">hello_time</span></tt></p>
-</td>
-<td><p class="first last">BPDU 패킷의 전송 간격</p>
-</td>
-<td><p class="first last">2 [sec]</p>
-</td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">hello_time</span></tt></td>
+<td>BPDU 패킷의 전송 간격</td>
+<td>2 [sec]</td>
 </tr>
-<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">fwd_delay</span></tt></p>
-</td>
-<td><p class="first last">각 포트가 LISTEN 상태 및 LEARN 상태에 머무는 시간</p>
-</td>
-<td><p class="first last">15[sec]</p>
-</td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">fwd_delay</span></tt></td>
+<td>각 포트가 LISTEN 상태 및 LEARN 상태에 머무는 시간</td>
+<td>15[sec]</td>
 </tr>
 </tbody>
 </table>
@@ -917,35 +914,23 @@ OpenFlow 1.3에 대응 한 simple_switch_stp_13.py 기반으로 응용 프로그
 <col width="41%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head"><p class="first last">항목</p>
-</th>
-<th class="head"><p class="first last">설명</p>
-</th>
-<th class="head"><p class="first last">기본값</p>
-</th>
+<tr class="row-odd"><th class="head">항목</th>
+<th class="head">설명</th>
+<th class="head">기본값</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">priority</span></tt></p>
-</td>
-<td><p class="first last">포트 우선 순위</p>
-</td>
-<td><p class="first last">0x80</p>
-</td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">priority</span></tt></td>
+<td>포트 우선 순위</td>
+<td>0x80</td>
 </tr>
-<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">path_cost</span></tt></p>
-</td>
-<td><p class="first last">링크의 비용 값 링크</p>
-</td>
-<td><p class="first last">속도를 바탕으로 자동 설정</p>
-</td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">path_cost</span></tt></td>
+<td>링크의 비용 값 링크</td>
+<td>속도를 바탕으로 자동 설정</td>
 </tr>
-<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">enable</span></tt></p>
-</td>
-<td><p class="first last">포트 활성화/비활성화 설정</p>
-</td>
-<td><p class="first last">True</p>
-</td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">enable</span></tt></td>
+<td>포트 활성화/비활성화 설정</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
@@ -1264,7 +1249,7 @@ BPDU 패킷을 수신 할 수있는 것을 의미하기 때문에 BPDU 수신 �
 가져 타이머 만료 후 <tt class="docutils literal"><span class="pre">Port._get_next_state()</span></tt> 에서 다음 상태를 가져,
 상태 전환합니다. 또한 STP 재 계산이 발생 지금까지의 포트 상태에 관계없이
 BLOCK 상태로 전환시키는 케이스 등 <tt class="docutils literal"><span class="pre">Port._change_status()</span></tt> 가 실행 된 경우
-도 상태 천이가 이루어집니다. 이러한 작업은 「`고장 검출`_ 」처럼
+도 상태 천이가 이루어집니다. 이러한 작업은 「<a class="reference internal" href="#id12">고장 검출</a> 」처럼
 hub 모듈 <tt class="docutils literal"><span class="pre">hub.Event</span></tt> 와 <tt class="docutils literal"><span class="pre">hub.Timeout</span></tt> 을 이용하여 실현하고 있습니다.</p>
 <div class="sourcecode highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Port</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
@@ -1404,12 +1389,13 @@ CONTEXT를 등록합니다.</p>
 BPDU 패킷을 제외한 패킷을 수신 할 수 있기 때문에,
 「 <a class="reference internal" href="switching_hub.html#ch-switching-hub"><em>스위칭 허브</em></a> 」와 같은 패킷 핸드 연결합니다.</p>
 <blockquote>
-<div><div class="sourcecode highlight-python"><pre>class SimpleSwitch13(app_manager.RyuApp):
+<div><div class="sourcecode highlight-python"><div class="highlight"><pre>class SimpleSwitch13(app_manager.RyuApp):
 
     @set_ev_cls(stplib.EventPacketIn, MAIN_DISPATCHER)
     def _packet_in_handler(self, ev):
 
-        # ...</pre>
+        # ...
+</pre></div>
 </div>
 </div></blockquote>
 <p>네트워크 토폴로지 변경 알림 이벤트 (<tt class="docutils literal"><span class="pre">stplib.EventTopologyChange</span></tt>)를

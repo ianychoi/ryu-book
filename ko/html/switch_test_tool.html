@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -95,42 +93,43 @@ OpenFlow 스위치 OpenFlow 사양에의 대응 상황을 확인하는 테스트
 에는 「등록 흐름 항목 또는 미터 항목」 「인가 패킷」
 「기대하는 처리 결과」가 설명됩니다. 또한 도구 실행을위한 환경 설정
 내용은 뒤에 서술 (<a class="reference internal" href="#id7">도구 실행 환경</a> 참조)합니다.</p>
-<a class="reference internal image-reference" href="_images/fig17.png"><img alt="_images/fig17.png" class="align-center" src="_images/fig17.png" style="width: 657.0px; height: 246.6px;" /></a>
+<a class="reference internal image-reference" href="_images/fig17.png"><img alt="_images/fig17.png" class="align-center" src="_images/fig17.png" /></a>
 </div>
 <div class="section" id="id4">
 <h4>시험 결과의 출력 이미지<a class="headerlink" href="#id4" title="제목 주소">¶</a></h4>
 <p>지정된 테스트 패턴 테스트 항목을 순서대로 수행하고 시험 결과
 (OK/ERROR)를 출력합니다. 시험 결과가 ERROR의 경우 오류 정보를 함께 출력합니다.
 또한 시험 전체의 OK/ERROR 수 및 발생한 ERROR 내역도 출력합니다.</p>
-<div class="console highlight-python"><pre>--- Test start ---
+<div class="console highlight-python"><div class="highlight"><pre>--- Test start ---
 
 match: 29_ICMPV6_TYPE
-    ethernet/ipv6/icmpv6(type=128)--&gt;'icmpv6_type=128,actions=output:2'               OK
-    ethernet/ipv6/icmpv6(type=128)--&gt;'icmpv6_type=128,actions=output:CONTROLLER'      OK
-    ethernet/ipv6/icmpv6(type=135)--&gt;'icmpv6_type=128,actions=output:2'               OK
-    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;'icmpv6_type=128,actions=output:2'          ERROR
+    ethernet/ipv6/icmpv6(type=128)--&gt;&#39;icmpv6_type=128,actions=output:2&#39;               OK
+    ethernet/ipv6/icmpv6(type=128)--&gt;&#39;icmpv6_type=128,actions=output:CONTROLLER&#39;      OK
+    ethernet/ipv6/icmpv6(type=135)--&gt;&#39;icmpv6_type=128,actions=output:2&#39;               OK
+    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;&#39;icmpv6_type=128,actions=output:2&#39;          ERROR
         Received incorrect packet-in: ethernet(ethertype=34525)
-    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;'icmpv6_type=128,actions=output:CONTROLLER' ERROR
+    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;&#39;icmpv6_type=128,actions=output:CONTROLLER&#39; ERROR
         Received incorrect packet-in: ethernet(ethertype=34525)
 match: 30_ICMPV6_CODE
-    ethernet/ipv6/icmpv6(code=0)--&gt;'icmpv6_code=0,actions=output:2'                   OK
-    ethernet/ipv6/icmpv6(code=0)--&gt;'icmpv6_code=0,actions=output:CONTROLLER'          OK
-    ethernet/ipv6/icmpv6(code=1)--&gt;'icmpv6_code=0,actions=output:2'                   OK
-    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;'icmpv6_code=0,actions=output:2'              ERROR
+    ethernet/ipv6/icmpv6(code=0)--&gt;&#39;icmpv6_code=0,actions=output:2&#39;                   OK
+    ethernet/ipv6/icmpv6(code=0)--&gt;&#39;icmpv6_code=0,actions=output:CONTROLLER&#39;          OK
+    ethernet/ipv6/icmpv6(code=1)--&gt;&#39;icmpv6_code=0,actions=output:2&#39;                   OK
+    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;&#39;icmpv6_code=0,actions=output:2&#39;              ERROR
         Received incorrect packet-in: ethernet(ethertype=34525)
-    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;'icmpv6_code=0,actions=output:CONTROLLER'     ERROR
+    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;&#39;icmpv6_code=0,actions=output:CONTROLLER&#39;     ERROR
         Received incorrect packet-in: ethernet(ethertype=34525)
 
 ---  Test end  ---
 
 --- Test report ---
 Received incorrect packet-in(4)
-    match: 29_ICMPV6_TYPE                    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;'icmpv6_type=128,actions=output:2'
-    match: 29_ICMPV6_TYPE                    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;'icmpv6_type=128,actions=output:CONTROLLER'
-    match: 30_ICMPV6_CODE                    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;'icmpv6_code=0,actions=output:2'
-    match: 30_ICMPV6_CODE                    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;'icmpv6_code=0,actions=output:CONTROLLER'
+    match: 29_ICMPV6_TYPE                    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;&#39;icmpv6_type=128,actions=output:2&#39;
+    match: 29_ICMPV6_TYPE                    ethernet/vlan/ipv6/icmpv6(type=128)--&gt;&#39;icmpv6_type=128,actions=output:CONTROLLER&#39;
+    match: 30_ICMPV6_CODE                    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;&#39;icmpv6_code=0,actions=output:2&#39;
+    match: 30_ICMPV6_CODE                    ethernet/vlan/ipv6/icmpv6(code=0)--&gt;&#39;icmpv6_code=0,actions=output:CONTROLLER&#39;
 
-OK(6) / ERROR(4)</pre>
+OK(6) / ERROR(4)
+</pre></div>
 </div>
 </div>
 </div>
@@ -144,69 +143,69 @@ OK(6) / ERROR(4)</pre>
 있습니다.</p>
 <p>테스트 패턴 파일 확장자를 「. json」고 말했다 텍스트 파일입니다.
 다음의 형식으로 작성합니다.</p>
-<div class="sourcecode highlight-python"><pre>[
-    "xxxxxxxxxx",                    # 시험 항목 이름
+<div class="sourcecode highlight-python"><div class="highlight"><pre>[
+    &quot;xxxxxxxxxx&quot;,                    # 시험 항목 이름
     {
-        "description": "xxxxxxxxxx", # 시험 내용 설명
-        "prerequisite": [
+        &quot;description&quot;: &quot;xxxxxxxxxx&quot;, # 시험 내용 설명
+        &quot;prerequisite&quot;: [
             {
-                "OFPFlowMod": {...}  # 등록하는 흐름 항목 또는 미터 항목
+                &quot;OFPFlowMod&quot;: {...}  # 등록하는 흐름 항목 또는 미터 항목
             },                       # (Ryu의 OFPFlowMod 또는 OFPMeterMod을
             {                        #  json 형식으로 작성)
-                "OFPMeterMod": {...} #  기대할 처리 결과가
+                &quot;OFPMeterMod&quot;: {...} #  기대할 처리 결과가
             },                       #  패킷 전송 (actions = output)의 경우
             {...}                    #  출력 포트 번호에 「2」를 지정하십시오
         ],
-        "tests": [
+        &quot;tests&quot;: [
             {
                 # 인가 패킷
                 # 1 번만 적용할지 일정 시간 연속하여인가 계속 여부에 따라
                 # (A)(B) 중 하나를 설명
                 #  (A) 1번 인가
-                "ingress": [
-                    "ethernet(...)", # (Ryu 패킷 라이브러리 생성자의 형식으로 작성)
-                    "ipv4(...)",
-                    "tcp(...)"
+                &quot;ingress&quot;: [
+                    &quot;ethernet(...)&quot;, # (Ryu 패킷 라이브러리 생성자의 형식으로 작성)
+                    &quot;ipv4(...)&quot;,
+                    &quot;tcp(...)&quot;
                 ],
                 #  (B) 일정 시간 연속 인가
-                "ingress": {
-                    "packets":{
-                        "data":[
-                            "ethernet(...)", # (A)와 동일
-                            "ipv4(...)",
-                            "tcp(...)"
+                &quot;ingress&quot;: {
+                    &quot;packets&quot;:{
+                        &quot;data&quot;:[
+                            &quot;ethernet(...)&quot;, # (A)와 동일
+                            &quot;ipv4(...)&quot;,
+                            &quot;tcp(...)&quot;
                         ],
-                        "pktps": 1000,       # 초당 인가하는 패킷 수를 지정
-                        "duration_time": 30  # 연속 인가 시간을 초 단위로 지정
+                        &quot;pktps&quot;: 1000,       # 초당 인가하는 패킷 수를 지정
+                        &quot;duration_time&quot;: 30  # 연속 인가 시간을 초 단위로 지정
                     }
                 },
 
                 # 기대할 처리 결과
                 # 처리 결과의 종별에 따라 (a) (b) (c) (d) 중 하나를 설명
                 # (a) 패킷 전송 (actions = output : X)의 확인 시험
-                "egress": [          # 기대할 전송 패킷
-                    "ethernet(...)",
-                    "ipv4(...)",
-                    "tcp(...)"
+                &quot;egress&quot;: [          # 기대할 전송 패킷
+                    &quot;ethernet(...)&quot;,
+                    &quot;ipv4(...)&quot;,
+                    &quot;tcp(...)&quot;
                 ]
                 #  (b) 패킷 인 (actions = CONTROLLER)의 확인 시험
-                "PACKET_IN": [       # 기대할 Packet-In 데이터
-                    "ethernet(...)",
-                    "ipv4(...)",
-                    "tcp(...)"
+                &quot;PACKET_IN&quot;: [       # 기대할 Packet-In 데이터
+                    &quot;ethernet(...)&quot;,
+                    &quot;ipv4(...)&quot;,
+                    &quot;tcp(...)&quot;
                 ]
                 #  (c) table-miss 확인 시험
-                "table-miss": [      # table-miss이되는 것을 기대하는 흐름 테이블 ID
+                &quot;table-miss&quot;: [      # table-miss이되는 것을 기대하는 흐름 테이블 ID
                     0
                 ]
                 #  (d) 패킷 전송 (actions = output : X) 때 처리량의 확인 시험
-                "egress":[
-                    "throughput":[
+                &quot;egress&quot;:[
+                    &quot;throughput&quot;:[
                         {
-                            "OFPMatch":{   # 처리량 측정에
+                            &quot;OFPMatch&quot;:{   # 처리량 측정에
                               ...          # 보조 SW에 등록 된
                             },             # 흐름 항목 Match 조건
-                            "kbps":1000    # 예상 처리량을 Kbps 단위로 지정
+                            &quot;kbps&quot;:1000    # 예상 처리량을 Kbps 단위로 지정
                         },
                         {...},
                         {...}
@@ -219,7 +218,8 @@ OK(6) / ERROR(4)</pre>
     },                               # 시험1
     {...},                           # 시험2
     {...}                            # 시험3
-]</pre>
+]
+</pre></div>
 </div>
 <p>인가 패킷으로 「(B) 일정 시간 연속하여인가」를,
 기대하는 처리 결과로 「(d) 패킷 전송 (actions = output : X) 때 처리량의 확인 시험」을
@@ -237,7 +237,7 @@ OK(6) / ERROR(4)</pre>
 <div class="section" id="id7">
 <h3>도구 실행 환경<a class="headerlink" href="#id7" title="제목 주소">¶</a></h3>
 <p>테스트 도구 실행을위한 환경은 다음과 같습니다.</p>
-<a class="reference internal image-reference" href="_images/fig24.png"><img alt="_images/fig24.png" class="align-center" src="_images/fig24.png" style="width: 592.2px; height: 277.8px;" /></a>
+<a class="reference internal image-reference" href="_images/fig24.png"><img alt="_images/fig24.png" class="align-center" src="_images/fig24.png" /></a>
 <p>보조 스위치로 다음 동작을 완료 할 수있다 OpenFlow 스위치가 필요합니다.</p>
 <ul class="simple">
 <li>actions=CONTROLLER의 흐름 항목 등록</li>
@@ -282,8 +282,9 @@ OK(6) / ERROR(4)</pre>
 </table>
 </div></blockquote>
 <p>테스트 도구는 다음 명령을 실행합니다.</p>
-<div class="console highlight-python"><pre>$ ryu-manager [--test-switch-target DPID] [--test-switch-tester DPID]
- [--test-switch-dir DIRECTORY] ryu/tests/switch/tester.py</pre>
+<div class="console highlight-python"><div class="highlight"><pre>$ ryu-manager [--test-switch-target DPID] [--test-switch-tester DPID]
+ [--test-switch-dir DIRECTORY] ryu/tests/switch/tester.py
+</pre></div>
 </div>
 <blockquote>
 <div><table border="1" class="docutils">
@@ -341,20 +342,23 @@ VM 이미지 사용을위한 환경 설정 및 로그인 방법 등은 「 <a cl
 <li><p class="first">시험 환경 구축</p>
 <blockquote>
 <div><p>VM 환경에 로그인하고 시험 환경 구축 스크립트를 실행합니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ sudo ryu/ryu/tests/switch/run_mininet.py</pre>
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ sudo ryu/ryu/tests/switch/run_mininet.py
+</pre></div>
 </div>
 <p>net 명령의 실행 결과는 다음과 같습니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; net
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; net
 c0
 s1 lo:  s1-eth1:s2-eth1 s1-eth2:s2-eth2
-s2 lo:  s2-eth1:s1-eth1 s2-eth2:s1-eth2</pre>
+s2 lo:  s2-eth1:s1-eth1 s2-eth2:s1-eth2
+</pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p class="first">테스트 도구 실행</p>
 <blockquote>
 <div><p>테스트 도구 실행을위한 컨트롤러의 xterm을 엽니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; xterm c0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; xterm c0
+</pre></div>
 </div>
 <p>「Node: c0 (root)」의 xterm에서 테스트 도구를 실행합니다.
 이때 테스트 패턴 파일 디렉터리로
@@ -363,11 +367,12 @@ s2 lo:  s2-eth1:s1-eth1 s2-eth2:s1-eth2</pre>
 &#8211;test-switch-target/&#8211;test-switch-tester 옵션 기본값과
 되어 있기 때문에 옵션을 생략합니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~$ ryu-manager --test-switch-dir ryu/ryu/tests/switch/of13 ryu/ryu/tests/switch/tester.py</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~$ ryu-manager --test-switch-dir ryu/ryu/tests/switch/of13 ryu/ryu/tests/switch/tester.py
+</pre></div>
 </div>
 <p>도구를 실행하면 다음과 같이 표시되고 시험되는 스위치와 보조 스위치가
 컨트롤러에 연결될 때까지 기다립니다.</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~$ ryu-manager --test-switch-dir ryu/ryu/tests/switch/of13/ ryu/ryu/tests/switch/tester.py
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~$ ryu-manager --test-switch-dir ryu/ryu/tests/switch/of13/ ryu/ryu/tests/switch/tester.py
 loading app ryu/ryu/tests/switch/tester.py
 loading app ryu.controller.ofp_handler
 instantiating app ryu/ryu/tests/switch/tester.py of OfTester
@@ -376,11 +381,12 @@ tester_dpid=0000000000000002
 Test files directory = ryu/ryu/tests/switch/of13/
 instantiating app ryu.controller.ofp_handler of OFPHandler
 --- Test start ---
-waiting for switches connection...</pre>
+waiting for switches connection...
+</pre></div>
 </div>
 <p>시험 대상 스위치와 보조 스위치가 컨트롤러에 연결되면
 시험이 시작됩니다.</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~$ ryu-manager --test-switch-dir ryu/ryu/tests/switch/of13/ ryu/ryu/tests/switch/tester.py
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~$ ryu-manager --test-switch-dir ryu/ryu/tests/switch/of13/ ryu/ryu/tests/switch/tester.py
 loading app ryu/ryu/tests/switch/tester.py
 loading app ryu.controller.ofp_handler
 instantiating app ryu/ryu/tests/switch/tester.py of OfTester
@@ -393,15 +399,16 @@ waiting for switches connection...
 dpid=0000000000000002 : Join tester SW.
 dpid=0000000000000001 : Join target SW.
 action: 00_OUTPUT
-    ethernet/ipv4/tcp--&gt;'actions=output:2'      OK
-    ethernet/ipv6/tcp--&gt;'actions=output:2'      OK
-    ethernet/arp--&gt;'actions=output:2'           OK
+    ethernet/ipv4/tcp--&gt;&#39;actions=output:2&#39;      OK
+    ethernet/ipv6/tcp--&gt;&#39;actions=output:2&#39;      OK
+    ethernet/arp--&gt;&#39;actions=output:2&#39;           OK
 action: 11_COPY_TTL_OUT
-    ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp--&gt;'eth_type=0x8847,actions=copy_ttl_out,output:2'        ERROR
+    ethernet/mpls(ttl=64)/ipv4(ttl=32)/tcp--&gt;&#39;eth_type=0x8847,actions=copy_ttl_out,output:2&#39;        ERROR
         Failed to add flows: OFPErrorMsg[type=0x02, code=0x00]
-    ethernet/mpls(ttl=64)/ipv6(hop_limit=32)/tcp--&gt;'eth_type=0x8847,actions=copy_ttl_out,output:2'  ERROR
+    ethernet/mpls(ttl=64)/ipv6(hop_limit=32)/tcp--&gt;&#39;eth_type=0x8847,actions=copy_ttl_out,output:2&#39;  ERROR
         Failed to add flows: OFPErrorMsg[type=0x02, code=0x00]
-...</pre>
+...
+</pre></div>
 </div>
 <p>ryu/tests/switch/of13 부하의 모든 샘플 테스트 패턴의 시험
 가 완료되면 테스트 도구는 종료됩니다.</p>
@@ -418,7 +425,7 @@ action: 11_COPY_TTL_OUT
 을 인가하는 테스트 패턴과 일정 빈도 이상인가에 대해 삭제 또는
 우선 순위 변경할 미터 항목을 등록하고 계량 항목에 match
 패킷을 연속적으로인가하는 테스트 패턴이 준비되어 있습니다.</div></blockquote>
-<div class="console highlight-python"><pre>ryu/tests/switch/of13/action:
+<div class="console highlight-python"><div class="highlight"><pre>ryu/tests/switch/of13/action:
 00_OUTPUT.json              20_POP_MPLS.json
 11_COPY_TTL_OUT.json        23_SET_NW_TTL_IPv4.json
 12_COPY_TTL_IN.json         23_SET_NW_TTL_IPv6.json
@@ -476,7 +483,8 @@ ryu/tests/switch/of13/meter:
 01_DROP_00_KBPS_02_100M.json    02_DSCP_REMARK_00_KBPS_02_100M.json
 01_DROP_01_PKTPS_00_100.json    02_DSCP_REMARK_01_PKTPS_00_100.json
 01_DROP_01_PKTPS_01_1000.json   02_DSCP_REMARK_01_PKTPS_01_1000.json
-01_DROP_01_PKTPS_02_10000.json  02_DSCP_REMARK_01_PKTPS_02_10000.json</pre>
+01_DROP_01_PKTPS_02_10000.json  02_DSCP_REMARK_01_PKTPS_02_10000.json
+</pre></div>
 </div>
 </div></blockquote>
 </div>
@@ -612,7 +620,8 @@ ryu/tests/switch/of13/meter:
 지정할 수 있습니다. 또한 송수신 패킷의 내용을 확인하기 위해
 &#8211;verbose 옵션을 지정합니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~$ ryu-manager --verbose --test-switch-dir ./sample_test_pattern.json ryu/ryu/tests/switch/tester.py</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~$ ryu-manager --verbose --test-switch-dir ./sample_test_pattern.json ryu/ryu/tests/switch/tester.py
+</pre></div>
 </div>
 <p>시험 대상 스위치와 보조 스위치가 컨트롤러에 연결되면 시험이
 시작됩니다.</p>
@@ -620,7 +629,7 @@ ryu/tests/switch/of13/meter:
 패턴 파일 egress 패킷으로 설정 한 예상 출력 패킷
 가 전송 된 것을 알 수 있습니다.
 또한, 여기에서는 테스트 도구가 출력 한 로그만을 발췌하고 있습니다.</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~$ ryu-manager --verbose --test-switch-dir ./sample_test_pattern.json ryu/ryu/tests/switch/tester.py
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~$ ryu-manager --verbose --test-switch-dir ./sample_test_pattern.json ryu/ryu/tests/switch/tester.py
 loading app ryu/tests/switch/tester.py
 loading app ryu.controller.ofp_handler
 instantiating app ryu.controller.ofp_handler of OFPHandler
@@ -637,20 +646,22 @@ dpid=0000000000000001 : Join target SW.
 
 sample: Router test
 
-send_packet:[ethernet(dst='22:22:22:22:22:22',ethertype=2048,src='11:11:11:11:11:11'), ipv4(csum=53560,dst='192.168.30.10',flags=0,header_length=5,identification=0,offset=0,option=None,proto=6,src='192.168.10.10',tos=32,total_length=59,ttl=64,version=4), tcp(ack=0,bits=0,csum=33311,dst_port=2222,offset=6,option='\x00\x00\x00\x00',seq=0,src_port=11111,urgent=0,window_size=0), '\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f']
-egress:[ethernet(dst='bb:bb:bb:bb:bb:bb',ethertype=2048,src='aa:aa:aa:aa:aa:aa'), ipv4(csum=53816,dst='192.168.30.10',flags=0,header_length=5,identification=0,offset=0,option=None,proto=6,src='192.168.10.10',tos=32,total_length=59,ttl=63,version=4), tcp(ack=0,bits=0,csum=33311,dst_port=2222,offset=6,option='\x00\x00\x00\x00',seq=0,src_port=11111,urgent=0,window_size=0), '\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f']
+send_packet:[ethernet(dst=&#39;22:22:22:22:22:22&#39;,ethertype=2048,src=&#39;11:11:11:11:11:11&#39;), ipv4(csum=53560,dst=&#39;192.168.30.10&#39;,flags=0,header_length=5,identification=0,offset=0,option=None,proto=6,src=&#39;192.168.10.10&#39;,tos=32,total_length=59,ttl=64,version=4), tcp(ack=0,bits=0,csum=33311,dst_port=2222,offset=6,option=&#39;\x00\x00\x00\x00&#39;,seq=0,src_port=11111,urgent=0,window_size=0), &#39;\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f&#39;]
+egress:[ethernet(dst=&#39;bb:bb:bb:bb:bb:bb&#39;,ethertype=2048,src=&#39;aa:aa:aa:aa:aa:aa&#39;), ipv4(csum=53816,dst=&#39;192.168.30.10&#39;,flags=0,header_length=5,identification=0,offset=0,option=None,proto=6,src=&#39;192.168.10.10&#39;,tos=32,total_length=59,ttl=63,version=4), tcp(ack=0,bits=0,csum=33311,dst_port=2222,offset=6,option=&#39;\x00\x00\x00\x00&#39;,seq=0,src_port=11111,urgent=0,window_size=0), &#39;\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f&#39;]
 packet_in:[]
-dpid=0000000000000002 : receive_packet[ethernet(dst='bb:bb:bb:bb:bb:bb',ethertype=2048,src='aa:aa:aa:aa:aa:aa'), ipv4(csum=53816,dst='192.168.30.10',flags=0,header_length=5,identification=0,offset=0,option=None,proto=6,src='192.168.10.10',tos=32,total_length=59,ttl=63,version=4), tcp(ack=0,bits=0,csum=33311,dst_port=2222,offset=6,option='\x00\x00\x00\x00',seq=0,src_port=11111,urgent=0,window_size=0), '\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f']
+dpid=0000000000000002 : receive_packet[ethernet(dst=&#39;bb:bb:bb:bb:bb:bb&#39;,ethertype=2048,src=&#39;aa:aa:aa:aa:aa:aa&#39;), ipv4(csum=53816,dst=&#39;192.168.30.10&#39;,flags=0,header_length=5,identification=0,offset=0,option=None,proto=6,src=&#39;192.168.10.10&#39;,tos=32,total_length=59,ttl=63,version=4), tcp(ack=0,bits=0,csum=33311,dst_port=2222,offset=6,option=&#39;\x00\x00\x00\x00&#39;,seq=0,src_port=11111,urgent=0,window_size=0), &#39;\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f&#39;]
     static routing table                            OK
----  Test end  ---</pre>
+---  Test end  ---
+</pre></div>
 </div>
 <p>실제로 OpenFlow 스위치에 등록 된 흐름 항목은 다음과 같습니다.
 테스트 도구에 의해 인가 된 패킷 흐름 항목에 match하고
 n_packets가 올라 가게되는 것을 알 수 있습니다.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O OpenFlow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O OpenFlow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
- cookie=0x0, duration=56.217s, table=0, n_packets=1, n_bytes=73, priority=0,ip,nw_dst=192.168.30.0/24 actions=set_field:aa:aa:aa:aa:aa:aa-&gt;eth_src,set_field:bb:bb:bb:bb:bb:bb-&gt;eth_dst,dec_ttl,output:2</pre>
+ cookie=0x0, duration=56.217s, table=0, n_packets=1, n_bytes=73, priority=0,ip,nw_dst=192.168.30.0/24 actions=set_field:aa:aa:aa:aa:aa:aa-&gt;eth_src,set_field:bb:bb:bb:bb:bb:bb-&gt;eth_dst,dec_ttl,output:2
+</pre></div>
 </div>
 </div></blockquote>
 </div>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -61,7 +59,7 @@
 회선을 묶어 하나의 논리적 링크로 처리 기술입니다. 링크 통합
 기능은 특정 네트워크 장치 간의 통신 속도를 향상시킬 수 있으며 동시
 에 중복성을 확보함으로써 감수성을 향상시킬 수 있습니다.</p>
-<a class="reference internal image-reference" href="_images/fig13.png"><img alt="_images/fig13.png" class="align-center" src="_images/fig13.png" style="width: 320.0px; height: 140.0px;" /></a>
+<a class="reference internal image-reference" href="_images/fig13.png"><img alt="_images/fig13.png" class="align-center" src="_images/fig13.png" /></a>
 <p>링크 통합 기능을 사용하려면 각 네트워크 장비에서
 어떤 인터페이스를 어떤 그룹으로 묶을 것인가하는 설정을 미리 해두
 해야합니다.</p>
@@ -216,7 +214,7 @@ simple_switch_lacp_13.py을 만듭니다. 이 프로그램은
 <p>VM 이미지 사용을위한 환경 설정 및 로그인 방법 등은 「 <a class="reference internal" href="switching_hub.html#ch-switching-hub"><em>스위칭 허브</em></a> 」
 을 참조하십시오.</p>
 <p>먼저 Mininet를 이용하여 아래 그림과 같은 토폴로지를 만듭니다.</p>
-<a class="reference internal image-reference" href="_images/fig21.png"><img alt="_images/fig21.png" class="align-center" src="_images/fig21.png" style="width: 330.8px; height: 258.4px;" /></a>
+<a class="reference internal image-reference" href="_images/fig21.png"><img alt="_images/fig21.png" class="align-center" src="_images/fig21.png" /></a>
 <p>Mininet API를 호출하는 스크립트를 작성하고 필요한 토폴로지를 구축
 합니다.</p>
 <p>소스 이름： <tt class="docutils literal"><span class="pre">link_aggregation.py</span></tt></p>
@@ -265,7 +263,7 @@ simple_switch_lacp_13.py을 만듭니다. 이 프로그램은
 <p>이 스크립트를 실행하여 호스트 h1과 스위치 s1 사이에 2 개의 링크가
 존재하는 토폴로지가됩니다. net 명령으로 생성 된 토폴로지를 확인해야
 할 수 있습니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ sudo ./link_aggregation.py
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ sudo ./link_aggregation.py
 Unable to contact the remote controller at 127.0.0.1:6633
 mininet&gt; net
 c0
@@ -274,7 +272,8 @@ h1 h1-eth0:s1-eth1 h1-eth1:s1-eth2
 h2 h2-eth0:s1-eth3
 h3 h3-eth0:s1-eth4
 h4 h4-eth0:s1-eth5
-mininet&gt;</pre>
+mininet&gt;
+</pre></div>
 </div>
 </div>
 <div class="section" id="h1">
@@ -287,11 +286,13 @@ Linux에서는 링크 통합 기능을 결합 드라이버가 담당하고 있�
 미리 드라이버의 설정 파일을 /etc/modprobe.d/bonding.conf로 작성 해
 수 있습니다.</p>
 <p>파일 이름: <tt class="docutils literal"><span class="pre">/etc/modprobe.d/bonding.conf</span></tt></p>
-<div class="sourcecode highlight-python"><pre>alias bond0 bonding
-options bonding mode=4</pre>
+<div class="sourcecode highlight-python"><div class="highlight"><pre>alias bond0 bonding
+options bonding mode=4
+</pre></div>
 </div>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# modprobe bonding</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# modprobe bonding
+</pre></div>
 </div>
 <p>mode = 4는 LACP를 이용한 동적 링크 통합 할 것을 나타냄
 입니다. 기본값이기 때문에 여기에서 설정을 선택하고 있습니다 만, LACP 데이터 유닛
@@ -300,35 +301,39 @@ options bonding mode=4</pre>
 <p>이어 bond0이라는 논리 인터페이스를 새로 만듭니다. 또한 bond0
 MAC 주소로 적당한 값을 설정합니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip link add bond0 type bond
-root@ryu-vm:~# ip link set bond0 address 02:01:02:03:04:08</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip link add bond0 type bond
+root@ryu-vm:~# ip link set bond0 address 02:01:02:03:04:08
+</pre></div>
 </div>
 <p>만든 논리 인터페이스의 그룹에 h1-eth0와 h1-eth1의 물리적 인터
 페이스를 참여시킵니다. 이 때, 물리적 인터페이스를 다운시켜 둘 필요
 수 있습니다. 또한 무작위로 결정되는 물리적 인터페이스의 MAC 주소를
 알기 쉬운 값으로 갱신해야합니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip link set h1-eth0 down
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip link set h1-eth0 down
 root@ryu-vm:~# ip link set h1-eth0 address 00:00:00:00:00:11
 root@ryu-vm:~# ip link set h1-eth0 master bond0
 root@ryu-vm:~# ip link set h1-eth1 down
 root@ryu-vm:~# ip link set h1-eth1 address 00:00:00:00:00:12
-root@ryu-vm:~# ip link set h1-eth1 master bond0</pre>
+root@ryu-vm:~# ip link set h1-eth1 master bond0
+</pre></div>
 </div>
 <p>논리 인터페이스에 IP 주소를 할당합니다.
 여기에 10.0.0.1를 할당합니다. 또한 h1-eth0에 IP 주소
 이 할당되어 있으므로 이를 제거합니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr add 10.0.0.1/8 dev bond0
-root@ryu-vm:~# ip addr del 10.0.0.1/8 dev h1-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr add 10.0.0.1/8 dev bond0
+root@ryu-vm:~# ip addr del 10.0.0.1/8 dev h1-eth0
+</pre></div>
 </div>
 <p>마지막으로, 논리적 인터페이스를 향상시킵니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip link set bond0 up</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip link set bond0 up
+</pre></div>
 </div>
 <p>여기에서 각 인터페이스의 상태를 확인해야합니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ifconfig
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ifconfig
 bond0     Link encap:Ethernet  HWaddr 02:01:02:03:04:08
           inet addr:10.0.0.1  Bcast:0.0.0.0  Mask:255.0.0.0
           UP BROADCAST RUNNING MASTER MULTICAST  MTU:1500  Metric:1
@@ -357,14 +362,15 @@ lo        Link encap:Local Loopback
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</pre>
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+</pre></div>
 </div>
 <p>논리적 인터페이스 bond0가 MASTER 물리 인터페이스 h1-eth0와 h1-eth1이
 SLAVE되어있는 것을 알 수 있습니다. 또한 bond0, h1-eth0, h1-eth1의 MAC 주소
 스가 모두 동일하게되어있는 것을 알 수 있습니다.</p>
 <p>본딩 드라이버의 상태도 확인해야합니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# cat /proc/net/bonding/bond0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# cat /proc/net/bonding/bond0
 Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
 
 Bonding Mode: IEEE 802.3ad Dynamic link aggregation
@@ -401,7 +407,8 @@ Duplex: full
 Link Failure Count: 0
 Permanent HW addr: 00:00:00:00:00:12
 Aggregator ID: 2
-Slave queue ID: 0</pre>
+Slave queue ID: 0
+</pre></div>
 </div>
 <p>LACP 데이터 유닛의 교환주기 (LACP rate : slow)와 배분 로직 설정
 (Transmit Hash Policy : layer2 (0))를 확인할 수 있습니다. 또한 물리적 인터
@@ -414,7 +421,8 @@ Slave queue ID: 0</pre>
 버전을 1.3으로 설정합니다. 이 명령 입력 스위치 s1의 xterm에서 실시
 하십시오.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13
+</pre></div>
 </div>
 </div>
 <div class="section" id="id4">
@@ -423,19 +431,20 @@ Slave queue ID: 0</pre>
 <p>윈도우 제목이 「Node: c0 (root)」이다 xterm에서 다음 명령
 을 실행합니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ ryu-manager ./simple_switch_lacp_13.py
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ ryu-manager ./simple_switch_lacp_13.py
 loading app ./simple_switch_lacp_13.py
 loading app ryu.controller.ofp_handler
 creating context lacplib
 instantiating app ./simple_switch_lacp_13.py
 instantiating app ryu.controller.ofp_handler
-...</pre>
+...
+</pre></div>
 </div>
 <p>호스트 h1은 30 초에 한 번 LACP 데이터 단위를 전송합니다. 시작에서 시바
 낙서하면 스위치는 호스트 h1에서 LACP 데이터 단위를 수신하여 작동 로그에
 출력합니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [LACP][INFO] SW=0000000000000001 PORT=1 LACP received.
 [LACP][INFO] SW=0000000000000001 PORT=1 the slave i/f has just been up.
 [LACP][INFO] SW=0000000000000001 PORT=1 the timeout time has changed.
@@ -446,7 +455,8 @@ slave state changed port: 1 enabled: True
 [LACP][INFO] SW=0000000000000001 PORT=2 the timeout time has changed.
 [LACP][INFO] SW=0000000000000001 PORT=2 LACP sent.
 slave state changed port: 2 enabled: True
-...</pre>
+...
+</pre></div>
 </div>
 <p>로그는 다음을 나타냅니다.</p>
 <ul>
@@ -481,20 +491,22 @@ slave state changed port: 2 enabled: True
 <p>스위치는 호스트 h1에서 LACP 데이터 유닛을 수신 할 때마다 응답 용 LACP 데이터 단위 전송
 신합니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [LACP][INFO] SW=0000000000000001 PORT=1 LACP received.
 [LACP][INFO] SW=0000000000000001 PORT=1 LACP sent.
 [LACP][INFO] SW=0000000000000001 PORT=2 LACP received.
 [LACP][INFO] SW=0000000000000001 PORT=2 LACP sent.
-...</pre>
+...
+</pre></div>
 </div>
 <p>흐름 항목을 확인하여 봅시다.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=14.565s, table=0, n_packets=1, n_bytes=124, idle_timeout=90, send_flow_rem priority=65535,in_port=2,dl_src=00:00:00:00:00:12,dl_type=0x8809 actions=CONTROLLER:65509
  cookie=0x0, duration=14.562s, table=0, n_packets=1, n_bytes=124, idle_timeout=90, send_flow_rem priority=65535,in_port=1,dl_src=00:00:00:00:00:11,dl_type=0x8809 actions=CONTROLLER:65509
- cookie=0x0, duration=24.821s, table=0, n_packets=2, n_bytes=248, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=24.821s, table=0, n_packets=2, n_bytes=248, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>스위치는</p>
 <ul class="simple">
@@ -516,23 +528,25 @@ LACP 데이터 유닛 (ethertype가 0x8809)가 보내져 오면 Packet-In 메시
 통신에 따라 여러 링크를 구사하는 모습을보고하자.</p>
 <p>먼저 호스트 h2에서 호스트 h1 대해 ping을 실행합니다.</p>
 <p>Node: h2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ping 10.0.0.1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 10.0.0.1
 PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
 64 bytes from 10.0.0.1: icmp_req=1 ttl=64 time=93.0 ms
 64 bytes from 10.0.0.1: icmp_req=2 ttl=64 time=0.266 ms
 64 bytes from 10.0.0.1: icmp_req=3 ttl=64 time=0.075 ms
 64 bytes from 10.0.0.1: icmp_req=4 ttl=64 time=0.065 ms
-...</pre>
+...
+</pre></div>
 </div>
 <p>ping을 계속 채 스위치 s1의 흐름 항목을 확인합니다.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=22.05s, table=0, n_packets=1, n_bytes=124, idle_timeout=90, send_flow_rem priority=65535,in_port=2,dl_src=00:00:00:00:00:12,dl_type=0x8809 actions=CONTROLLER:65509
  cookie=0x0, duration=22.046s, table=0, n_packets=1, n_bytes=124, idle_timeout=90, send_flow_rem priority=65535,in_port=1,dl_src=00:00:00:00:00:11,dl_type=0x8809 actions=CONTROLLER:65509
  cookie=0x0, duration=33.046s, table=0, n_packets=6, n_bytes=472, priority=0 actions=CONTROLLER:65535
  cookie=0x0, duration=3.259s, table=0, n_packets=3, n_bytes=294, priority=1,in_port=3,dl_dst=02:01:02:03:04:08 actions=output:1
- cookie=0x0, duration=3.262s, table=0, n_packets=4, n_bytes=392, priority=1,in_port=1,dl_dst=00:00:00:00:00:22 actions=output:3</pre>
+ cookie=0x0, duration=3.262s, table=0, n_packets=4, n_bytes=392, priority=1,in_port=1,dl_dst=00:00:00:00:00:22 actions=output:3
+</pre></div>
 </div>
 <p>방금 확인한 시점에서 두 흐름 항목이 추가되어 있습니다.
 duration 값이 작은 4 번째와 5 번째 항목입니다.</p>
@@ -547,17 +561,18 @@ duration 값이 작은 4 번째와 5 번째 항목입니다.</p>
 있습니다.</p>
 <p>그런 다음 호스트 h3에서 호스트 h1 대해 ping을 실행합니다.</p>
 <p>Node: h3:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ping 10.0.0.1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 10.0.0.1
 PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
 64 bytes from 10.0.0.1: icmp_req=1 ttl=64 time=91.2 ms
 64 bytes from 10.0.0.1: icmp_req=2 ttl=64 time=0.256 ms
 64 bytes from 10.0.0.1: icmp_req=3 ttl=64 time=0.057 ms
 64 bytes from 10.0.0.1: icmp_req=4 ttl=64 time=0.073 ms
-...</pre>
+...
+</pre></div>
 </div>
 <p>ping을 계속 채 스위치 s1의 흐름 항목을 확인합니다.</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=99.765s, table=0, n_packets=4, n_bytes=496, idle_timeout=90, send_flow_rem priority=65535,in_port=2,dl_src=00:00:00:00:00:12,dl_type=0x8809 actions=CONTROLLER:65509
  cookie=0x0, duration=99.761s, table=0, n_packets=4, n_bytes=496, idle_timeout=90, send_flow_rem priority=65535,in_port=1,dl_src=00:00:00:00:00:11,dl_type=0x8809 actions=CONTROLLER:65509
@@ -565,7 +580,8 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=80.974s, table=0, n_packets=82, n_bytes=7924, priority=1,in_port=3,dl_dst=02:01:02:03:04:08 actions=output:1
  cookie=0x0, duration=2.677s, table=0, n_packets=2, n_bytes=196, priority=1,in_port=2,dl_dst=00:00:00:00:00:23 actions=output:4
  cookie=0x0, duration=2.675s, table=0, n_packets=1, n_bytes=98, priority=1,in_port=4,dl_dst=02:01:02:03:04:08 actions=output:2
- cookie=0x0, duration=80.977s, table=0, n_packets=83, n_bytes=8022, priority=1,in_port=1,dl_dst=00:00:00:00:00:22 actions=output:3</pre>
+ cookie=0x0, duration=80.977s, table=0, n_packets=83, n_bytes=8022, priority=1,in_port=1,dl_dst=00:00:00:00:00:22 actions=output:3
+</pre></div>
 </div>
 <p>방금 확인한 시점에서 두 흐름 항목이 추가되어 있습니다.
 duration 값이 작은 다섯 번째와 여섯 번째 항목입니다.</p>
@@ -603,7 +619,7 @@ h4와 h1 사이의 통신에는 s1-eth1이 사용됩니다.</p>
 </tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="_images/fig31.png"><img alt="_images/fig31.png" class="align-center" src="_images/fig31.png" style="width: 328.8px; height: 294.0px;" /></a>
+<a class="reference internal image-reference" href="_images/fig31.png"><img alt="_images/fig31.png" class="align-center" src="_images/fig31.png" /></a>
 <p>이상과 같이 통신에 따라 여러 링크를 구사하는 모습을 확인할 수 있었습니다.</p>
 </div>
 <div class="section" id="id7">
@@ -614,13 +630,14 @@ h2와 h4가 h1와 통신 할 때 s1-eth2를 h3이 h1와 통신 할 때 s1-eth1�
 <p>여기서 s1-eth1의 대향 인터페이스이다 h1-eth0를 링크 통합
 그룹에서 이탈시킵니다.</p>
 <p>Node: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip link set h1-eth0 nomaster</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip link set h1-eth0 nomaster
+</pre></div>
 </div>
 <p>h1-eth0가 중지함으로써 호스트 h3에서 호스트 h1에 ping이 소통 불가능
 있습니다. 무 통신 감시 시간 90 초가 경과하면 컨트롤러의 동작
 로그에 다음과 같은 메시지가 출력됩니다.</p>
 <p>Node: c0:</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [LACP][INFO] SW=0000000000000001 PORT=1 LACP received.
 [LACP][INFO] SW=0000000000000001 PORT=1 LACP sent.
 [LACP][INFO] SW=0000000000000001 PORT=2 LACP received.
@@ -631,7 +648,8 @@ h2와 h4가 h1와 통신 할 때 s1-eth2를 h3이 h1와 통신 할 때 s1-eth1�
 [LACP][INFO] SW=0000000000000001 PORT=2 LACP sent.
 [LACP][INFO] SW=0000000000000001 PORT=1 LACP exchange timeout has occurred.
 slave state changed port: 1 enabled: False
-...</pre>
+...
+</pre></div>
 </div>
 <p>「LACP exchange timeout has occurred.」무 통신 감시 시간에 도달
 것을 나타냅니다.
@@ -642,7 +660,7 @@ MAC 주소 전송의 흐름 항목을 삭제하는 것으로,
 살아있는 링크만을 이용한 흐름 항목이 다시 등록됩니다.</p>
 <p>호스트 h3와 호스트 h1 사이도 새로운 흐름 항목이 등록되어</p>
 <p>Node: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=364.265s, table=0, n_packets=13, n_bytes=1612, idle_timeout=90, send_flow_rem priority=65535,in_port=2,dl_src=00:00:00:00:00:12,dl_type=0x8809 actions=CONTROLLER:65509
  cookie=0x0, duration=374.521s, table=0, n_packets=25, n_bytes=1830, priority=0 actions=CONTROLLER:65535
@@ -651,11 +669,12 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=6.281s, table=0, n_packets=5, n_bytes=490, priority=1,in_port=5,dl_dst=02:01:02:03:04:08 actions=output:2
  cookie=0x0, duration=5.506s, table=0, n_packets=5, n_bytes=434, priority=1,in_port=4,dl_dst=02:01:02:03:04:08 actions=output:2
  cookie=0x0, duration=5.736s, table=0, n_packets=5, n_bytes=490, priority=1,in_port=2,dl_dst=00:00:00:00:00:21 actions=output:3
- cookie=0x0, duration=6.504s, table=0, n_packets=6, n_bytes=532, priority=1,in_port=2,dl_dst=00:00:00:00:00:22 actions=output:4</pre>
+ cookie=0x0, duration=6.504s, table=0, n_packets=6, n_bytes=532, priority=1,in_port=2,dl_dst=00:00:00:00:00:22 actions=output:4
+</pre></div>
 </div>
 <p>호스트 h3 중지했다 ping이 다시 시작합니다.</p>
 <p>Node: h3:</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 64 bytes from 10.0.0.1: icmp_req=144 ttl=64 time=0.193 ms
 64 bytes from 10.0.0.1: icmp_req=145 ttl=64 time=0.081 ms
 64 bytes from 10.0.0.1: icmp_req=146 ttl=64 time=0.095 ms
@@ -664,7 +683,8 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 64 bytes from 10.0.0.1: icmp_req=239 ttl=64 time=0.371 ms
 64 bytes from 10.0.0.1: icmp_req=240 ttl=64 time=0.103 ms
 64 bytes from 10.0.0.1: icmp_req=241 ttl=64 time=0.067 ms
-...</pre>
+...
+</pre></div>
 </div>
 <p>이상과 같이 일부 링크에 고장이 발생한 경우에도 다른 링크
 를 사용하여 자동으로 복구 할 수 있는지 확인 할 수있었습니다.</p>
@@ -1238,11 +1258,12 @@ LACP 라이브러리가 제공하는 add() 메소드를 실행합니다. 여기�
 </table>
 <p>이 설정은 데이터 경로 ID「0000000000000001」의 OpenFlow 스위치의 포트1과
 포트 2가 하나의 링크 통합 그룹으로 작동합니다.</p>
-<div class="sourcecode highlight-python"><pre># ...
-    self._lacp = kwargs['lacplib']
+<div class="sourcecode highlight-python"><div class="highlight"><pre># ...
+    self._lacp = kwargs[&#39;lacplib&#39;]
     self._lacp.add(
-        dpid=str_to_dpid('0000000000000001'), ports=[1, 2])
-# ...</pre>
+        dpid=str_to_dpid(&#39;0000000000000001&#39;), ports=[1, 2])
+# ...
+</pre></div>
 </div>
 </div>
 <div class="section" id="id14">

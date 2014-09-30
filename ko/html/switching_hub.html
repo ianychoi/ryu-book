@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -112,12 +110,14 @@
 </div></blockquote>
 <img alt="_images/fig25.png" class="align-center" src="_images/fig25.png" />
 <p>Packet-In:</p>
-<div class="highlight-python"><pre>in-port: 1
+<div class="highlight-python"><div class="highlight"><pre>in-port: 1
 eth-dst: 호스트B
-eth-src: 호스트A</pre>
+eth-src: 호스트A
+</pre></div>
 </div>
 <p>Packet-Out:</p>
-<div class="highlight-python"><pre>action: OUTPUT:Flooding</pre>
+<div class="highlight-python"><div class="highlight"><pre>action: OUTPUT:Flooding
+</pre></div>
 </div>
 </div></blockquote>
 </li>
@@ -130,12 +130,14 @@ eth-src: 호스트A</pre>
 </div></blockquote>
 <img alt="_images/fig34.png" class="align-center" src="_images/fig34.png" />
 <p>Packet-In:</p>
-<div class="highlight-python"><pre>in-port: 4
+<div class="highlight-python"><div class="highlight"><pre>in-port: 4
 eth-dst: 호스트A
-eth-src: 호스트B</pre>
+eth-src: 호스트B
+</pre></div>
 </div>
 <p>Packet-Out:</p>
-<div class="highlight-python"><pre>action: OUTPUT:포트1</pre>
+<div class="highlight-python"><div class="highlight"><pre>action: OUTPUT:포트1
+</pre></div>
 </div>
 </div></blockquote>
 </li>
@@ -147,12 +149,14 @@ eth-src: 호스트B</pre>
 </div></blockquote>
 <img alt="_images/fig44.png" class="align-center" src="_images/fig44.png" />
 <p>Packet-In:</p>
-<div class="highlight-python"><pre>in-port: 1
+<div class="highlight-python"><div class="highlight"><pre>in-port: 1
 eth-dst: 호스트B
-eth-src: 호스트A</pre>
+eth-src: 호스트A
+</pre></div>
 </div>
 <p>Packet-Out:</p>
-<div class="highlight-python"><pre>action: OUTPUT:호스트4</pre>
+<div class="highlight-python"><div class="highlight"><pre>action: OUTPUT:호스트4
+</pre></div>
 </div>
 </div></blockquote>
 </li>
@@ -787,7 +791,8 @@ Removed 메시지를 발행합니다.</td>
 <dt>Ryu 버전 3.2</dt>
 <dd><p class="first"><a class="reference external" href="https://github.com/osrg/ryu/">https://github.com/osrg/ryu/</a></p>
 <blockquote class="last">
-<div><div class="console highlight-python"><pre>$ sudo pip install ryu</pre>
+<div><div class="console highlight-python"><div class="highlight"><pre>$ sudo pip install ryu
+</pre></div>
 </div>
 </div></blockquote>
 </dd>
@@ -799,7 +804,8 @@ Removed 메시지를 발행합니다.</td>
 <p>여기에서는 OpenFlow Tutorial VM을 사용하므로,
 ssh에서 X11 Forwarding을 사용하여 로그인하십시오.</p>
 <blockquote>
-<div><div class="highlight-python"><pre>$ ssh -X ryu@&lt;VM 주소&gt;</pre>
+<div><div class="highlight-python"><div class="highlight"><pre>$ ssh -X ryu@&lt;VM 주소&gt;
+</pre></div>
 </div>
 </div></blockquote>
 <p>사용자 이름은 <tt class="docutils literal"><span class="pre">ryu</span></tt> 이고, 암호는 <tt class="docutils literal"><span class="pre">ryu</span></tt> 입니다.</p>
@@ -842,7 +848,7 @@ ssh에서 X11 Forwarding을 사용하여 로그인하십시오.</p>
 </tbody>
 </table>
 <p>실행 예는 다음과 같습니다.</p>
-<div class="console highlight-python"><pre>$ sudo mn --topo single,3 --mac --switch ovsk --controller remote -x
+<div class="console highlight-python"><div class="highlight"><pre>$ sudo mn --topo single,3 --mac --switch ovsk --controller remote -x
 *** Creating network
 *** Adding controller
 Unable to contact the remote controller at 127.0.0.1:6633
@@ -859,7 +865,8 @@ h1 h2 h3
 *** Starting 1 switches
 s1
 *** Starting CLI:
-mininet&gt;</pre>
+mininet&gt;
+</pre></div>
 </div>
 <p>실행하면 데스크탑 PC에서 5개의 xterm이 시작됩니다.
 각 xterm은 호스트 1~3, 스위치, 그리고 컨트롤러에 대응합니다.</p>
@@ -868,22 +875,22 @@ mininet&gt;</pre>
 스위치 용 xterm입니다.</p>
 <p>우선 Open vSwitch의 상태를 확인합니다.</p>
 <p>switch: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl show
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl show
 fdec0957-12b6-4417-9d02-847654e9cc1f
-Bridge "s1"
-    Controller "ptcp:6634"
-    Controller "tcp:127.0.0.1:6633"
+Bridge &quot;s1&quot;
+    Controller &quot;ptcp:6634&quot;
+    Controller &quot;tcp:127.0.0.1:6633&quot;
     fail_mode: secure
-    Port "s1-eth3"
-        Interface "s1-eth3"
-    Port "s1-eth2"
-        Interface "s1-eth2"
-    Port "s1-eth1"
-        Interface "s1-eth1"
-    Port "s1"
-        Interface "s1"
+    Port &quot;s1-eth3&quot;
+        Interface &quot;s1-eth3&quot;
+    Port &quot;s1-eth2&quot;
+        Interface &quot;s1-eth2&quot;
+    Port &quot;s1-eth1&quot;
+        Interface &quot;s1-eth1&quot;
+    Port &quot;s1&quot;
+        Interface &quot;s1&quot;
             type: internal
-ovs_version: "1.11.0"
+ovs_version: &quot;1.11.0&quot;
 root@ryu-vm:~# ovs-dpctl show
 system@ovs-system:
         lookups: hit:14 missed:14 lost:0
@@ -893,20 +900,23 @@ system@ovs-system:
         port 2: s1-eth1
         port 3: s1-eth2
         port 4: s1-eth3
-root@ryu-vm:~#</pre>
+root@ryu-vm:~#
+</pre></div>
 </div>
 <p>스위치 (브리지) <em>s1</em> 이 생성되었고, 호스트에 해당 포트가
 3개 추가되어 있습니다.</p>
 <p>다음 OpenFlow 버전을 1.3으로 설정합니다.</p>
 <p>switch: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13
-root@ryu-vm:~#</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13
+root@ryu-vm:~#
+</pre></div>
 </div>
 <p>플로우 테이블을 확인해 봅시다.</p>
 <p>switch: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O OpenFlow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O OpenFlow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
-root@ryu-vm:~#</pre>
+root@ryu-vm:~#
+</pre></div>
 </div>
 <p>ovs-ofctl 명령 실행시, 옵션으로 사용하는 OpenFlow 버전을
 지정해야 합니다. 기본값은 <em>OpenFlow10</em> 입니다.</p>
@@ -917,7 +927,7 @@ root@ryu-vm:~#</pre>
 <p>윈도우 제목이 「controller : c0 (root)」인 xterm에서
 다음 명령을 실행합니다.</p>
 <p>controller: c0:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ryu-manager --verbose ryu.app.simple_switch_13
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ryu-manager --verbose ryu.app.simple_switch_13
 loading app ryu.app.simple_switch_13
 loading app ryu.controller.ofp_handler
 instantiating app ryu.app.simple_switch_13
@@ -926,35 +936,38 @@ BRICK SimpleSwitch13
   CONSUMES EventOFPSwitchFeatures
   CONSUMES EventOFPPacketIn
 BRICK ofp_event
-  PROVIDES EventOFPSwitchFeatures TO {'SimpleSwitch13': set(['config'])}
-  PROVIDES EventOFPPacketIn TO {'SimpleSwitch13': set(['main'])}
+  PROVIDES EventOFPSwitchFeatures TO {&#39;SimpleSwitch13&#39;: set([&#39;config&#39;])}
+  PROVIDES EventOFPPacketIn TO {&#39;SimpleSwitch13&#39;: set([&#39;main&#39;])}
   CONSUMES EventOFPErrorMsg
   CONSUMES EventOFPHello
   CONSUMES EventOFPEchoRequest
   CONSUMES EventOFPPortDescStatsReply
   CONSUMES EventOFPSwitchFeatures
-connected socket:&lt;eventlet.greenio.GreenSocket object at 0x2e2c050&gt; address:('127.0.0.1', 53937)
+connected socket:&lt;eventlet.greenio.GreenSocket object at 0x2e2c050&gt; address:(&#39;127.0.0.1&#39;, 53937)
 hello ev &lt;ryu.controller.ofp_event.EventOFPHello object at 0x2e2a550&gt;
 move onto config mode
 EVENT ofp_event-&gt;SimpleSwitch13 EventOFPSwitchFeatures
 switch features ev version: 0x4 msg_type 0x6 xid 0xff9ad15b OFPSwitchFeatures(auxiliary_id=0,capabilities=71,datapath_id=1,n_buffers=256,n_tables=254)
-move onto main mode</pre>
+move onto main mode
+</pre></div>
 </div>
 <p>OVS와의 연결에 시간이 걸리는 경우도 있지만, 잠시 기다리면 다음과 같이</p>
-<div class="console highlight-python"><pre>connected socket:&lt;....
+<div class="console highlight-python"><div class="highlight"><pre>connected socket:&lt;....
 hello ev ...
 ...
-move onto main mode</pre>
+move onto main mode
+</pre></div>
 </div>
 <p>로 표시됩니다.</p>
 <p>이제 OVS와 연결되었고, 핸드쉐이크가 이루어져 Table-miss 흐름 항목이
 추가되었고, 스위칭 허브는 Packet-In을 기다리는 상태입니다.</p>
 <p>Table-miss 흐름 항목이 추가되어 있는지 확인합니다.</p>
 <p>switch: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=105.975s, table=0, n_packets=0, n_bytes=0, priority=0 actions=CONTROLLER:65535
-root@ryu-vm:~#</pre>
+root@ryu-vm:~#
+</pre></div>
 </div>
 <p>우선 순위가 0으로 매치가 없는 상태이고, 액션에 CONTROLLER 전송 데이터 크기로 65535
 (0xffff = OFPCML_NO_BUFFER)가 지정되어 있습니다.</p>
@@ -992,40 +1005,45 @@ request 이전에 ARP request를 브로드 캐스팅됩니다.
 <p>ping 명령을 실행하기 전에 각 호스트에 어떤 패킷을 수신했는지 확인하기 위해
 tcpdump 명령을 실행합니다.</p>
 <p>host: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -en -i h1-eth0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -en -i h1-eth0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-listening on h1-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes</pre>
+listening on h1-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+</pre></div>
 </div>
 <p>host: h2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -en -i h2-eth0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -en -i h2-eth0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-listening on h2-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes</pre>
+listening on h2-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+</pre></div>
 </div>
 <p>host: h3:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -en -i h3-eth0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -en -i h3-eth0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-listening on h3-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes</pre>
+listening on h3-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+</pre></div>
 </div>
 <p>그럼, 먼저 mn 명령을 실행한 콘솔에서 다음 명령을 실행하여
 호스트 1에서 호스트 2로 ping을 수행합니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; h1 ping -c1 h2
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; h1 ping -c1 h2
 PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 64 bytes from 10.0.0.2: icmp_req=1 ttl=64 time=97.5 ms
 
 --- 10.0.0.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 97.594/97.594/97.594/0.000 ms
-mininet&gt;</pre>
+mininet&gt;
+</pre></div>
 </div>
 <p>ICMP echo reply가 정상적으로 반환됩니다.</p>
 <p>우선, 플로우 테이블을 확인합니다.</p>
 <p>switch: s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=417.838s, table=0, n_packets=3, n_bytes=182, priority=0 actions=CONTROLLER:65535
  cookie=0x0, duration=48.444s, table=0, n_packets=2, n_bytes=140, priority=1,in_port=2,dl_dst=00:00:00:00:00:01 actions=output:1
  cookie=0x0, duration=48.402s, table=0, n_packets=1, n_bytes=42, priority=1,in_port=1,dl_dst=00:00:00:00:00:02 actions=output:2
-root@ryu-vm:~#</pre>
+root@ryu-vm:~#
+</pre></div>
 </div>
 <p>Table-miss 플로우 항목 이외에 우선 순위가 1인 플로우 항목이 2 개 등록되어
 있습니다.</p>
@@ -1042,12 +1060,13 @@ root@ryu-vm:~#</pre>
 이는 ICMP echo request에 의한 것입니다.</p>
 <p>그럼 simple_switch_13 로그 결과를 살펴 봅시다.</p>
 <p>controller: c0:</p>
-<div class="console highlight-python"><pre>EVENT ofp_event-&gt;SimpleSwitch13 EventOFPPacketIn
+<div class="console highlight-python"><div class="highlight"><pre>EVENT ofp_event-&gt;SimpleSwitch13 EventOFPPacketIn
 packet in 1 00:00:00:00:00:01 ff:ff:ff:ff:ff:ff 1
 EVENT ofp_event-&gt;SimpleSwitch13 EventOFPPacketIn
 packet in 1 00:00:00:00:00:02 00:00:00:00:00:01 2
 EVENT ofp_event-&gt;SimpleSwitch13 EventOFPPacketIn
-packet in 1 00:00:00:00:00:01 00:00:00:00:00:02 1</pre>
+packet in 1 00:00:00:00:00:01 00:00:00:00:00:02 1
+</pre></div>
 </div>
 <p>첫 번째 Packet-In은 호스트 1이 발행한 ARP request이고, 브로드캐스트이므로
 플로우 항목에 등록되지 않고 Packet-Out 만 발행됩니다.</p>
@@ -1059,34 +1078,37 @@ packet in 1 00:00:00:00:00:01 00:00:00:00:00:02 1</pre>
 일치하기 때문에 Packet-In은 발행되지 않고 호스트 1에 전송됩니다.</p>
 <p>마지막으로 각 호스트에서 실행한 tcpdump의 출력 결과를 살펴봅시다.</p>
 <p>host: h1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -en -i h1-eth0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -en -i h1-eth0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on h1-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
 20:38:04.625473 00:00:00:00:00:01 &gt; ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 42: Request who-has 10.0.0.2 tell 10.0.0.1, length 28
 20:38:04.678698 00:00:00:00:00:02 &gt; 00:00:00:00:00:01, ethertype ARP (0x0806), length 42: Reply 10.0.0.2 is-at 00:00:00:00:00:02, length 28
 20:38:04.678731 00:00:00:00:00:01 &gt; 00:00:00:00:00:02, ethertype IPv4 (0x0800), length 98: 10.0.0.1 &gt; 10.0.0.2: ICMP echo request, id 3940, seq 1, length 64
-20:38:04.722973 00:00:00:00:00:02 &gt; 00:00:00:00:00:01, ethertype IPv4 (0x0800), length 98: 10.0.0.2 &gt; 10.0.0.1: ICMP echo reply, id 3940, seq 1, length 64</pre>
+20:38:04.722973 00:00:00:00:00:02 &gt; 00:00:00:00:00:01, ethertype IPv4 (0x0800), length 98: 10.0.0.2 &gt; 10.0.0.1: ICMP echo reply, id 3940, seq 1, length 64
+</pre></div>
 </div>
 <p>호스트 1에서 먼저 ARP request가 브로드캐스트되고 있어, 계속 호스트 2에서
 반환된 ARP reply를 받고 있습니다.
 그런 다음, 호스트 1는 ICMP echo request를 발행하고, 호스트 2에서 반환된 ICMP echo reply를 수신합니다.</p>
 <p>host: h2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -en -i h2-eth0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -en -i h2-eth0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on h2-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
 20:38:04.637987 00:00:00:00:00:01 &gt; ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 42: Request who-has 10.0.0.2 tell 10.0.0.1, length 28
 20:38:04.638059 00:00:00:00:00:02 &gt; 00:00:00:00:00:01, ethertype ARP (0x0806), length 42: Reply 10.0.0.2 is-at 00:00:00:00:00:02, length 28
 20:38:04.722601 00:00:00:00:00:01 &gt; 00:00:00:00:00:02, ethertype IPv4 (0x0800), length 98: 10.0.0.1 &gt; 10.0.0.2: ICMP echo request, id 3940, seq 1, length 64
-20:38:04.722747 00:00:00:00:00:02 &gt; 00:00:00:00:00:01, ethertype IPv4 (0x0800), length 98: 10.0.0.2 &gt; 10.0.0.1: ICMP echo reply, id 3940, seq 1, length 64</pre>
+20:38:04.722747 00:00:00:00:00:02 &gt; 00:00:00:00:00:01, ethertype IPv4 (0x0800), length 98: 10.0.0.2 &gt; 10.0.0.1: ICMP echo reply, id 3940, seq 1, length 64
+</pre></div>
 </div>
 <p>호스트 2에서 호스트 1이 발행한 ARP request를 수신하고, 호스트 1에 ARP reply를
 반환합니다. 그런 다음, 호스트 1에서 ICMP echo request를 수신하고 호스트 1에
 echo reply를 반환합니다.</p>
 <p>host: h3:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# tcpdump -en -i h3-eth0
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# tcpdump -en -i h3-eth0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on h3-eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
-20:38:04.637954 00:00:00:00:00:01 &gt; ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 42: Request who-has 10.0.0.2 tell 10.0.0.1, length 28</pre>
+20:38:04.637954 00:00:00:00:00:01 &gt; ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 42: Request who-has 10.0.0.2 tell 10.0.0.1, length 28
+</pre></div>
 </div>
 <p>호스트 3은 먼저 호스트 1의 브로드캐스팅 된 ARP request 만 수신
 하고 있습니다.</p>

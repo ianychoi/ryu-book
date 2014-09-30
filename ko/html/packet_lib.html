@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -341,21 +339,22 @@ IP 주소 등은 __init__ 메서드에 하드 코드되어 있습니다.</p>
 한편 LINC는 가능한 한 많은 정보를 넣어줍니다.</p>
 </div>
 <p>다음은 ping -c 3를 실행 한 경우 로그의 예입니다</p>
-<div class="console highlight-python"><pre>EVENT ofp_event-&gt;IcmpResponder EventOFPSwitchFeatures
+<div class="console highlight-python"><div class="highlight"><pre>EVENT ofp_event-&gt;IcmpResponder EventOFPSwitchFeatures
 switch features ev version: 0x4 msg_type 0x6 xid 0xb63c802c OFPSwitchFeatures(auxiliary_id=0,capabilities=71,datapath_id=11974852296259,n_buffers=256,n_tables=254)
 move onto main mode
 EVENT ofp_event-&gt;IcmpResponder EventOFPPacketIn
-packet-in ethernet(dst='ff:ff:ff:ff:ff:ff',ethertype=2054,src='0a:e4:1c:d1:3e:43'), arp(dst_ip='192.0.2.9',dst_mac='00:00:00:00:00:00',hlen=6,hwtype=1,opcode=1,plen=4,proto=2048,src_ip='192.0.2.99',src_mac='0a:e4:1c:d1:3e:43'), '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-packet-out ethernet(dst='0a:e4:1c:d1:3e:43',ethertype=2054,src='0a:e4:1c:d1:3e:44'), arp(dst_ip='192.0.2.99',dst_mac='0a:e4:1c:d1:3e:43',hlen=6,hwtype=1,opcode=2,plen=4,proto=2048,src_ip='192.0.2.9',src_mac='0a:e4:1c:d1:3e:44')
+packet-in ethernet(dst=&#39;ff:ff:ff:ff:ff:ff&#39;,ethertype=2054,src=&#39;0a:e4:1c:d1:3e:43&#39;), arp(dst_ip=&#39;192.0.2.9&#39;,dst_mac=&#39;00:00:00:00:00:00&#39;,hlen=6,hwtype=1,opcode=1,plen=4,proto=2048,src_ip=&#39;192.0.2.99&#39;,src_mac=&#39;0a:e4:1c:d1:3e:43&#39;), &#39;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39;
+packet-out ethernet(dst=&#39;0a:e4:1c:d1:3e:43&#39;,ethertype=2054,src=&#39;0a:e4:1c:d1:3e:44&#39;), arp(dst_ip=&#39;192.0.2.99&#39;,dst_mac=&#39;0a:e4:1c:d1:3e:43&#39;,hlen=6,hwtype=1,opcode=2,plen=4,proto=2048,src_ip=&#39;192.0.2.9&#39;,src_mac=&#39;0a:e4:1c:d1:3e:44&#39;)
 EVENT ofp_event-&gt;IcmpResponder EventOFPPacketIn
-packet-in ethernet(dst='0a:e4:1c:d1:3e:44',ethertype=2048,src='0a:e4:1c:d1:3e:43'), ipv4(csum=47390,dst='192.0.2.9',flags=0,header_length=5,identification=32285,offset=0,option=None,proto=1,src='192.0.2.99',tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=38471,data=echo(data='S,B\x00\x00\x00\x00\x00\x03L)(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&amp;\'()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00',id=44565,seq=0),type=8)
-packet-out ethernet(dst='0a:e4:1c:d1:3e:43',ethertype=2048,src='0a:e4:1c:d1:3e:44'), ipv4(csum=14140,dst='192.0.2.99',flags=0,header_length=5,identification=0,offset=0,option=None,proto=1,src='192.0.2.9',tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=40519,data=echo(data='S,B\x00\x00\x00\x00\x00\x03L)(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&amp;\'()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00',id=44565,seq=0),type=0)
+packet-in ethernet(dst=&#39;0a:e4:1c:d1:3e:44&#39;,ethertype=2048,src=&#39;0a:e4:1c:d1:3e:43&#39;), ipv4(csum=47390,dst=&#39;192.0.2.9&#39;,flags=0,header_length=5,identification=32285,offset=0,option=None,proto=1,src=&#39;192.0.2.99&#39;,tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=38471,data=echo(data=&#39;S,B\x00\x00\x00\x00\x00\x03L)(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&#39;()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00&#39;,id=44565,seq=0),type=8)
+packet-out ethernet(dst=&#39;0a:e4:1c:d1:3e:43&#39;,ethertype=2048,src=&#39;0a:e4:1c:d1:3e:44&#39;), ipv4(csum=14140,dst=&#39;192.0.2.99&#39;,flags=0,header_length=5,identification=0,offset=0,option=None,proto=1,src=&#39;192.0.2.9&#39;,tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=40519,data=echo(data=&#39;S,B\x00\x00\x00\x00\x00\x03L)(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&#39;()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00&#39;,id=44565,seq=0),type=0)
 EVENT ofp_event-&gt;IcmpResponder EventOFPPacketIn
-packet-in ethernet(dst='0a:e4:1c:d1:3e:44',ethertype=2048,src='0a:e4:1c:d1:3e:43'), ipv4(csum=47383,dst='192.0.2.9',flags=0,header_length=5,identification=32292,offset=0,option=None,proto=1,src='192.0.2.99',tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=12667,data=echo(data='T,B\x00\x00\x00\x00\x00Q\x17?(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&amp;\'()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00',id=44565,seq=1),type=8)
-packet-out ethernet(dst='0a:e4:1c:d1:3e:43',ethertype=2048,src='0a:e4:1c:d1:3e:44'), ipv4(csum=14140,dst='192.0.2.99',flags=0,header_length=5,identification=0,offset=0,option=None,proto=1,src='192.0.2.9',tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=14715,data=echo(data='T,B\x00\x00\x00\x00\x00Q\x17?(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&amp;\'()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00',id=44565,seq=1),type=0)
+packet-in ethernet(dst=&#39;0a:e4:1c:d1:3e:44&#39;,ethertype=2048,src=&#39;0a:e4:1c:d1:3e:43&#39;), ipv4(csum=47383,dst=&#39;192.0.2.9&#39;,flags=0,header_length=5,identification=32292,offset=0,option=None,proto=1,src=&#39;192.0.2.99&#39;,tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=12667,data=echo(data=&#39;T,B\x00\x00\x00\x00\x00Q\x17?(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&#39;()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00&#39;,id=44565,seq=1),type=8)
+packet-out ethernet(dst=&#39;0a:e4:1c:d1:3e:43&#39;,ethertype=2048,src=&#39;0a:e4:1c:d1:3e:44&#39;), ipv4(csum=14140,dst=&#39;192.0.2.99&#39;,flags=0,header_length=5,identification=0,offset=0,option=None,proto=1,src=&#39;192.0.2.9&#39;,tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=14715,data=echo(data=&#39;T,B\x00\x00\x00\x00\x00Q\x17?(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&#39;()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00&#39;,id=44565,seq=1),type=0)
 EVENT ofp_event-&gt;IcmpResponder EventOFPPacketIn
-packet-in ethernet(dst='0a:e4:1c:d1:3e:44',ethertype=2048,src='0a:e4:1c:d1:3e:43'), ipv4(csum=47379,dst='192.0.2.9',flags=0,header_length=5,identification=32296,offset=0,option=None,proto=1,src='192.0.2.99',tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=26863,data=echo(data='U,B\x00\x00\x00\x00\x00!\xa26(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&amp;\'()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00',id=44565,seq=2),type=8)
-packet-out ethernet(dst='0a:e4:1c:d1:3e:43',ethertype=2048,src='0a:e4:1c:d1:3e:44'), ipv4(csum=14140,dst='192.0.2.99',flags=0,header_length=5,identification=0,offset=0,option=None,proto=1,src='192.0.2.9',tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=28911,data=echo(data='U,B\x00\x00\x00\x00\x00!\xa26(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&amp;\'()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00',id=44565,seq=2),type=0)</pre>
+packet-in ethernet(dst=&#39;0a:e4:1c:d1:3e:44&#39;,ethertype=2048,src=&#39;0a:e4:1c:d1:3e:43&#39;), ipv4(csum=47379,dst=&#39;192.0.2.9&#39;,flags=0,header_length=5,identification=32296,offset=0,option=None,proto=1,src=&#39;192.0.2.99&#39;,tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=26863,data=echo(data=&#39;U,B\x00\x00\x00\x00\x00!\xa26(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&#39;()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00&#39;,id=44565,seq=2),type=8)
+packet-out ethernet(dst=&#39;0a:e4:1c:d1:3e:43&#39;,ethertype=2048,src=&#39;0a:e4:1c:d1:3e:44&#39;), ipv4(csum=14140,dst=&#39;192.0.2.99&#39;,flags=0,header_length=5,identification=0,offset=0,option=None,proto=1,src=&#39;192.0.2.9&#39;,tos=0,total_length=84,ttl=255,version=4), icmp(code=0,csum=28911,data=echo(data=&#39;U,B\x00\x00\x00\x00\x00!\xa26(\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&#39;()*+,-./\x00\x00\x00\x00\x00\x00\x00\x00&#39;,id=44565,seq=2),type=0)
+</pre></div>
 </div>
 <p>IP 조각 대응은 독자에게 숙제로합니다.
 OpenFlow 프로토콜 자체에는 MTU를 검색하는 방법이 없기 때문에,

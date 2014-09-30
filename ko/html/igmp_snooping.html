@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -75,7 +73,7 @@
 <p>이 방식 은 멀티 캐스트 그룹 참여 호스트 가 없는 서브넷 에 대해
 라고 멀티 캐스트 패킷이 전송 되지 않으며 불필요한 트래픽을 감소 해야
 할 수 있습니다.</p>
-<a class="reference internal image-reference" href="_images/fig11.png"><img alt="_images/fig11.png" class="align-center" src="_images/fig11.png" style="width: 344.8px; height: 459.6px;" /></a>
+<a class="reference internal image-reference" href="_images/fig11.png"><img alt="_images/fig11.png" class="align-center" src="_images/fig11.png" /></a>
 </div>
 <div class="section" id="id3">
 <h3>서브넷의 과제와 IGMP 스누핑 내용<a class="headerlink" href="#id3" title="제목 주소">¶</a></h3>
@@ -86,14 +84,14 @@
 때문에, 예를 들어있는 하나의 포트에만 멀티 캐스트 그룹 참여 호스트 연결
 되고 있었다고해도, L2 스위치는 수신 된 멀티 캐스트 패킷을 모든 포트로 전송
 해 버립니다.</p>
-<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" class="align-center" src="_images/fig2.png" style="width: 428.4px; height: 331.2px;" /></a>
+<a class="reference internal image-reference" href="_images/fig2.png"><img alt="_images/fig2.png" class="align-center" src="_images/fig2.png" /></a>
 <p>IGMP 스누핑은 멀티 캐스트 그룹 참여 호스트에서 멀티 캐스트 라우터에
 전송되는 IGMP Report Message를 L2 스위치가 엿보기 (snoop) 것으로 마루찌캬
 스트 패킷의 대상 포트를 학습하는 수법입니다. 이 방법은 서브넷
 트 내에서 멀티 캐스트 그룹 참여 호스트가 존재하지 않는 포트에 멀티
 캐스트 패킷이 전송되는 것은 없으며 불필요한 트래픽을 줄일 수
 수 있습니다.</p>
-<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" class="align-center" src="_images/fig3.png" style="width: 394.8px; height: 706.8px;" /></a>
+<a class="reference internal image-reference" href="_images/fig3.png"><img alt="_images/fig3.png" class="align-center" src="_images/fig3.png" /></a>
 <p>IGMP 스누핑을 할 L2 스위치는 여러 호스트에서 동일한 멀티 캐스트 그
 루프에 참가하고 있다는 IGMP Report Message를 수신해도 쿼리 기 1 드라이버
 또는 IGMP Report Message를 전송하지 않습니다. 또한 호스트에서 IGMP Leave Message
@@ -234,7 +232,7 @@ simple_switch_igmp_13.py을 만들합니다. 이 프로그램은
 <p>VM 이미지 사용을위한 환경 설정 및 로그인 방법 등은 「 <a class="reference internal" href="switching_hub.html#ch-switching-hub"><em>스위칭 허브</em></a> 」
 을 참조하십시오.</p>
 <p>먼저 Mininet를 이용하여 아래 그림과 같은 토폴로지를 만듭니다.</p>
-<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" class="align-center" src="_images/fig4.png" style="width: 405.6px; height: 376.4px;" /></a>
+<a class="reference internal image-reference" href="_images/fig4.png"><img alt="_images/fig4.png" class="align-center" src="_images/fig4.png" /></a>
 <p><tt class="docutils literal"><span class="pre">mn</span></tt> 명령의 매개 변수는 다음과 같습니다.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -274,7 +272,7 @@ simple_switch_igmp_13.py을 만들합니다. 이 프로그램은
 </tbody>
 </table>
 <p>실행 예는 다음과 같습니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ sudo mn --topo linear,2,3 --mac --switch ovsk --controller remote -x
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ sudo mn --topo linear,2,3 --mac --switch ovsk --controller remote -x
 *** Creating network
 *** Adding controller
 Unable to contact the remote controller at 127.0.0.1:6633
@@ -292,10 +290,11 @@ h1s1 h1s2 h2s1 h2s2 h3s1 h3s2
 s1 s2
 
 *** Starting CLI:
-mininet&gt;</pre>
+mininet&gt;
+</pre></div>
 </div>
 <p>net 명령의 실행 결과는 다음과 같습니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; net
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; net
 h1s1 h1s1-eth0:s1-eth1
 h1s2 h1s2-eth0:s2-eth1
 h2s1 h2s1-eth0:s1-eth2
@@ -305,7 +304,8 @@ h3s2 h3s2-eth0:s2-eth3
 s1 lo:  s1-eth1:h1s1-eth0 s1-eth2:h2s1-eth0 s1-eth3:h3s1-eth0 s1-eth4:s2-eth4
 s2 lo:  s2-eth1:h1s2-eth0 s2-eth2:h2s2-eth0 s2-eth3:h3s2-eth0 s2-eth4:s1-eth4
 c0
-mininet&gt;</pre>
+mininet&gt;
+</pre></div>
 </div>
 </div>
 <div class="section" id="id5">
@@ -314,22 +314,28 @@ mininet&gt;</pre>
 호스트가 IGMP v3을 사용하지 않도록 설정합니다. 이 명령 입력은 각 호스트의
 xterm에서 실시해주세요.</p>
 <p>host: h1s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h1s1-eth0/force_igmp_version</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h1s1-eth0/force_igmp_version
+</pre></div>
 </div>
 <p>host: h1s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h1s2-eth0/force_igmp_version</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h1s2-eth0/force_igmp_version
+</pre></div>
 </div>
 <p>host: h2s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h2s1-eth0/force_igmp_version</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h2s1-eth0/force_igmp_version
+</pre></div>
 </div>
 <p>host: h2s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h2s2-eth0/force_igmp_version</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h2s2-eth0/force_igmp_version
+</pre></div>
 </div>
 <p>host: h3s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h3s1-eth0/force_igmp_version</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h3s1-eth0/force_igmp_version
+</pre></div>
 </div>
 <p>host: h3s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h3s2-eth0/force_igmp_version</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# echo 2 &gt; /proc/sys/net/ipv4/conf/h3s2-eth0/force_igmp_version
+</pre></div>
 </div>
 </div>
 <div class="section" id="ip">
@@ -338,28 +344,34 @@ xterm에서 실시해주세요.</p>
 인터넷에 소속되어 있습니다. 다른 서브넷을 구축하기위한 각 호스트에서 IP 주소를
 다시 할당합니다.</p>
 <p>host: h1s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr del 10.0.0.1/8 dev h1s1-eth0
-root@ryu-vm:~# ip addr add 172.16.10.10/24 dev h1s1-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.1/8 dev h1s1-eth0
+root@ryu-vm:~# ip addr add 172.16.10.10/24 dev h1s1-eth0
+</pre></div>
 </div>
 <p>host: h1s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr del 10.0.0.2/8 dev h1s2-eth0
-root@ryu-vm:~# ip addr add 192.168.1.1/24 dev h1s2-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.2/8 dev h1s2-eth0
+root@ryu-vm:~# ip addr add 192.168.1.1/24 dev h1s2-eth0
+</pre></div>
 </div>
 <p>host: h2s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr del 10.0.0.3/8 dev h2s1-eth0
-root@ryu-vm:~# ip addr add 172.16.20.20/24 dev h2s1-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.3/8 dev h2s1-eth0
+root@ryu-vm:~# ip addr add 172.16.20.20/24 dev h2s1-eth0
+</pre></div>
 </div>
 <p>host: h2s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr del 10.0.0.4/8 dev h2s2-eth0
-root@ryu-vm:~# ip addr add 192.168.1.2/24 dev h2s2-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.4/8 dev h2s2-eth0
+root@ryu-vm:~# ip addr add 192.168.1.2/24 dev h2s2-eth0
+</pre></div>
 </div>
 <p>host: h3s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr del 10.0.0.5/8 dev h3s1-eth0
-root@ryu-vm:~# ip addr add 172.16.30.30/24 dev h3s1-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.5/8 dev h3s1-eth0
+root@ryu-vm:~# ip addr add 172.16.30.30/24 dev h3s1-eth0
+</pre></div>
 </div>
 <p>host: h3s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip addr del 10.0.0.6/8 dev h3s2-eth0
-root@ryu-vm:~# ip addr add 192.168.1.3/24 dev h3s2-eth0</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.6/8 dev h3s2-eth0
+root@ryu-vm:~# ip addr add 192.168.1.3/24 dev h3s2-eth0
+</pre></div>
 </div>
 </div>
 <div class="section" id="id6">
@@ -367,22 +379,28 @@ root@ryu-vm:~# ip addr add 192.168.1.3/24 dev h3s2-eth0</pre>
 <p>각 호스트에서 IGMP 패킷이 성공적으로 보낼 수 있도록 기본 게이트웨이를 설정
 정합니다.</p>
 <p>host: h1s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip route add default via 172.16.10.254</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 172.16.10.254
+</pre></div>
 </div>
 <p>host: h1s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip route add default via 192.168.1.254</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 192.168.1.254
+</pre></div>
 </div>
 <p>host: h2s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip route add default via 172.16.20.254</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 172.16.20.254
+</pre></div>
 </div>
 <p>host: h2s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip route add default via 192.168.1.254</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 192.168.1.254
+</pre></div>
 </div>
 <p>host: h3s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip route add default via 172.16.30.254</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 172.16.30.254
+</pre></div>
 </div>
 <p>host: h3s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ip route add default via 192.168.1.254</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 192.168.1.254
+</pre></div>
 </div>
 </div>
 <div class="section" id="openflow">
@@ -390,10 +408,12 @@ root@ryu-vm:~# ip addr add 192.168.1.3/24 dev h3s2-eth0</pre>
 <p>사용하는 OpenFlow 버전을 1.3으로 설정합니다. 이 명령 입력 스위치
 s1, s2의 xterm에서 실시해주세요.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s1 protocols=OpenFlow13
+</pre></div>
 </div>
 <p>switch: s2 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s2 protocols=OpenFlow13</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s2 protocols=OpenFlow13
+</pre></div>
 </div>
 </div>
 <div class="section" id="id7">
@@ -401,7 +421,7 @@ s1, s2의 xterm에서 실시해주세요.</p>
 <p>준비가 그래서 처음에 만든 Ryu 응용 프로그램을 실행합니다. 이 명령
 입력은 컨트롤러 c0의 xterm에서 실시해주세요.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ryu-manager ./simple_switch_igmp_13.py
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ryu-manager ./simple_switch_igmp_13.py
 loading app ./simple_switch_igmp_13.py
 loading app ryu.controller.ofp_handler
 loading app ryu.controller.ofp_handler
@@ -409,23 +429,26 @@ instantiating app None of IgmpLib
 creating context igmplib
 instantiating app ./simple_switch_igmp_13.py of SimpleSwitchIgmp13
 instantiating app ryu.controller.ofp_handler of OFPHandler
-...</pre>
+...
+</pre></div>
 </div>
 <p>시작 후 바로 스위치 s1이 멀티 캐스트 라우터 (IGMP Query Message를 전송하기
 때문에 쿼리 기라고도 함) 역할을 시작했다는 것을 나타내는 로그가 출력됩니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [querier][INFO] started a querier.
-...</pre>
+...
+</pre></div>
 </div>
 <p>쿼리 기는 60 초에 한 번 IGMP Query Message를 모든 포트로 전송하여 IGMP Report Message
 이 돌아온 포트에 멀티 캐스트 서버에서 멀티 캐스트 패킷을 회전
 전송 흐름 항목을 등록합니다.</p>
 <p>동시에 쿼리 기 이외의 스위치에서 IGMP 패킷 스누핑이 시작됩니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=4 IGMP received. [QUERY]
-...</pre>
+...
+</pre></div>
 </div>
 <p>위의 로그는 쿼리 기이다 스위치 s1에서 보낸 IGMP Query Message를 스
 스위치 s2가 포트 4에서 수신 된 것을 나타냅니다. 스위치 s2는받은
@@ -447,17 +470,19 @@ IGMP Query Message를 기다립니다.</p>
 <p>우선 호스트 h1s2에서 멀티 캐스트 주소 「225.0.0.1」에게 스트림을
 재생하도록 설정합니다. VLC는 호스트 h1s2에서 IGMP Report Message를 보냅니다.</p>
 <p>host: h1s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.1</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.1
+</pre></div>
 </div>
 <p>스위치 s2는 호스트 h1s2에서 IGMP Report Message를 포트 1로 수신하여 멀티 캐스트 주소 「225.0.0.1」을 받는 그룹이 포트 1 먼저 존재하는 것을 인식합니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=1 IGMP received. [REPORT]
 Multicast Group Added: [225.0.0.1] querier:[4] hosts:[]
 Multicast Group Member Changed: [225.0.0.1] querier:[4] hosts:[1]
 [snoop][INFO] SW=0000000000000002 PORT=1 IGMP received. [REPORT]
 [snoop][INFO] SW=0000000000000002 PORT=1 IGMP received. [REPORT]
-...</pre>
+...
+</pre></div>
 </div>
 <p>위의 로그는 스위치 s2에있어서</p>
 <ul class="simple">
@@ -473,18 +498,20 @@ Multicast Group Member Changed: [225.0.0.1] querier:[4] hosts:[1]
 멀티 캐스트 그룹 참여 호스트 h1s2 그때마다 IGMP Report Message를 전송
 합니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=4 IGMP received. [QUERY]
 [snoop][INFO] SW=0000000000000002 PORT=1 IGMP received. [REPORT]
-...</pre>
+...
+</pre></div>
 </div>
 <p>이 시점에서 쿼리 기 등록 된 흐름 항목을 확인하려고합니다.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=827.211s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.1 actions=output:4
  cookie=0x0, duration=827.211s, table=0, n_packets=14, n_bytes=644, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=CONTROLLER:65509
- cookie=0x0, duration=843.887s, table=0, n_packets=1, n_bytes=46, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=843.887s, table=0, n_packets=1, n_bytes=46, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>쿼리 기에</p>
 <ul>
@@ -506,11 +533,12 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 <p>세 가지 흐름 항목이 등록되어 있습니다.</p>
 <p>또한 스위치 s2에 등록되어있는 흐름 항목도 확인 해 봅니다.</p>
 <p>switch: s2 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=1463.549s, table=0, n_packets=26, n_bytes=1196, priority=65535,ip,in_port=1,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=1463.548s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=output:1
- cookie=0x0, duration=1480.221s, table=0, n_packets=26, n_bytes=1096, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=1480.221s, table=0, n_packets=26, n_bytes=1096, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>스위치 s2에</p>
 <ul>
@@ -536,36 +564,40 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 <p>이어 호스트 h3s2에서도 멀티 캐스트 주소 「225.0.0.1」에게 스트림을 재생하도록
 설정합니다. VLC는 호스트 h3s2에서 IGMP Report Message를 보냅니다.</p>
 <p>host: h3s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.1</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.1
+</pre></div>
 </div>
 <p>스위치 s2는 호스트 h3s2에서 IGMP Report Message를 포트 3에서 수신하고 마루찌캬
 스트 주소 「225.0.0.1」을 수신하는 그룹의 참여 호스트가 포트 1의 다른 포트 3
 끝에도 존재 함을 인식합니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=3 IGMP received. [REPORT]
 Multicast Group Member Changed: [225.0.0.1] querier:[4] hosts:[1, 3]
 [snoop][INFO] SW=0000000000000002 PORT=3 IGMP received. [REPORT]
 [snoop][INFO] SW=0000000000000002 PORT=3 IGMP received. [REPORT]
-...</pre>
+...
+</pre></div>
 </div>
 <p>이 시점에서 쿼리 기 등록 된 흐름 항목을 확인하려고합니다.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=1854.016s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.1 actions=output:4
  cookie=0x0, duration=1854.016s, table=0, n_packets=31, n_bytes=1426, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=CONTROLLER:65509
- cookie=0x0, duration=1870.692s, table=0, n_packets=1, n_bytes=46, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=1870.692s, table=0, n_packets=1, n_bytes=46, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>쿼리 기 등록 된 흐름 항목은 특히 변경은 없습니다.</p>
 <p>또한 스위치 s2에 등록되어있는 흐름 항목도 확인 해 봅니다.</p>
 <p>switch: s2 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=1910.703s, table=0, n_packets=34, n_bytes=1564, priority=65535,ip,in_port=1,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=162.606s, table=0, n_packets=5, n_bytes=230, priority=65535,ip,in_port=3,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=162.606s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=output:1,output:3
- cookie=0x0, duration=1927.375s, table=0, n_packets=35, n_bytes=1478, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=1927.375s, table=0, n_packets=35, n_bytes=1478, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>스위치 s2에</p>
 <ul>
@@ -598,29 +630,32 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 에게 스트림을 재생하도록 설정합니다. VLC는 호스트 h2s2에서
 IGMP Report Message를 보냅니다.</p>
 <p>host: h2s2:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.2</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.2
+</pre></div>
 </div>
 <p>그런 다음 호스트 h2s2는 다른 호스트와는 다른 멀티 캐스트 주소 「225.0.0.2」
 에게 스트림을 재생하도록 설정합니다. VLC는 호스트 h2s2에서
 IGMP Report Message를 보냅니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=2 IGMP received. [REPORT]
 Multicast Group Added: [225.0.0.2] querier:[4] hosts:[]
 Multicast Group Member Changed: [225.0.0.2] querier:[4] hosts:[2]
 [snoop][INFO] SW=0000000000000002 PORT=2 IGMP received. [REPORT]
 [snoop][INFO] SW=0000000000000002 PORT=2 IGMP received. [REPORT]
-...</pre>
+...
+</pre></div>
 </div>
 <p>이 시점에서 쿼리 기 등록 된 흐름 항목을 확인하려고합니다.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=2289.168s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.1 actions=output:4
  cookie=0x0, duration=108.374s, table=0, n_packets=2, n_bytes=92, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=CONTROLLER:65509
  cookie=0x0, duration=108.375s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=output:4
  cookie=0x0, duration=2289.168s, table=0, n_packets=38, n_bytes=1748, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=CONTROLLER:65509
- cookie=0x0, duration=2305.844s, table=0, n_packets=2, n_bytes=92, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=2305.844s, table=0, n_packets=2, n_bytes=92, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>쿼리 기에</p>
 <ul>
@@ -654,14 +689,15 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 <p>5 개의 흐름 항목이 등록되어 있습니다.</p>
 <p>또한 스위치 s2에 등록되어있는 흐름 항목도 확인 해 봅니다.</p>
 <p>switch: s2 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=2379.973s, table=0, n_packets=41, n_bytes=1886, priority=65535,ip,in_port=1,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=199.178s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=output:2
  cookie=0x0, duration=631.876s, table=0, n_packets=12, n_bytes=552, priority=65535,ip,in_port=3,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=199.178s, table=0, n_packets=5, n_bytes=230, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=CONTROLLER:65509
  cookie=0x0, duration=631.876s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=output:1,output:3
- cookie=0x0, duration=2396.645s, table=0, n_packets=43, n_bytes=1818, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=2396.645s, table=0, n_packets=43, n_bytes=1818, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>스위치 s2에</p>
 <ul>
@@ -705,20 +741,22 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 <p>또한 호스트 h3s1에서도 멀티 캐스트 주소 「225.0.0.1」에게 스트림을 재생하도록
 설정합니다. VLC는 호스트 h3s1에서 IGMP Report Message를 보냅니다.</p>
 <p>host: h3s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.1</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# vlc-wrapper udp://@225.0.0.1
+</pre></div>
 </div>
 <p>호스트 h3s1 스위치 s2와 연결되어 있지 않습니다. 따라서 IGMP 스누핑 기능
 의 대상이 아니라 쿼리 기 사이의 일반적 IGMP 패킷의 교환을 실시합니다.</p>
 <p>이 시점에서 쿼리 기 등록 된 흐름 항목을 확인하려고합니다.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=12.85s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.1 actions=output:3,output:4
  cookie=0x0, duration=626.33s, table=0, n_packets=10, n_bytes=460, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=CONTROLLER:65509
  cookie=0x0, duration=12.85s, table=0, n_packets=1, n_bytes=46, priority=65535,ip,in_port=3,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=626.331s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=output:4
  cookie=0x0, duration=2807.124s, table=0, n_packets=46, n_bytes=2116, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=CONTROLLER:65509
- cookie=0x0, duration=2823.8s, table=0, n_packets=3, n_bytes=138, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=2823.8s, table=0, n_packets=3, n_bytes=138, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>쿼리 기에</p>
 <ul>
@@ -759,7 +797,8 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 <p>멀티 캐스트 서버 인 호스트 h2s1에서 스트리밍을 시작합니다. 멀티
 캐스트 주소에는 「225.0.0.1」을 사용하기로합니다.</p>
 <p>host: h2s1:</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# vlc-wrapper sample.mov --sout udp:225.0.0.1 --loop</pre>
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# vlc-wrapper sample.mov --sout udp:225.0.0.1 --loop
+</pre></div>
 </div>
 <p>그러자 「225.0.0.1」멀티 캐스트 그룹에 참여하는 h1s2, h3s2, h1s3
 각 호스트에서 실행하는 VLC 멀티 캐스트 서버에서 제공하고있는 동영상이 재생 함
@@ -775,10 +814,11 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 라 IGMP Leave Message를 포트 1로 수신하여 멀티 캐스트 주소 「225.0.0.1」
 를 수신하는 그룹의 참여 호스트가 포트 1의 끝에 존재하지 않는 것을 인식합니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=1 IGMP received. [LEAVE]
 Multicast Group Member Changed: [225.0.0.1] querier:[4] hosts:[3]
-...</pre>
+...
+</pre></div>
 </div>
 <p>위의 로그는 스위치 s2에있어서</p>
 <ul>
@@ -797,25 +837,27 @@ Multicast Group Member Changed: [225.0.0.1] querier:[4] hosts:[3]
 입니다.</p>
 <p>이 시점에서 쿼리 기 등록 된 흐름 항목을 확인하려고합니다.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=1565.13s, table=0, n_packets=1047062, n_bytes=1421910196, priority=65535,ip,in_port=2,nw_dst=225.0.0.1 actions=output:3,output:4
  cookie=0x0, duration=2178.61s, table=0, n_packets=36, n_bytes=1656, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=CONTROLLER:65509
  cookie=0x0, duration=1565.13s, table=0, n_packets=27, n_bytes=1242, priority=65535,ip,in_port=3,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=2178.611s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=output:4
  cookie=0x0, duration=4359.404s, table=0, n_packets=72, n_bytes=3312, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=CONTROLLER:65509
- cookie=0x0, duration=4376.08s, table=0, n_packets=3, n_bytes=138, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=4376.08s, table=0, n_packets=3, n_bytes=138, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>쿼리 기 등록 된 흐름 항목은 특히 변경은 없습니다.</p>
 <p>또한 스위치 s2에 등록되어있는 흐름 항목도 확인 해 봅니다.</p>
 <p>switch: s2 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=2228.528s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=output:2
  cookie=0x0, duration=2661.226s, table=0, n_packets=46, n_bytes=2116, priority=65535,ip,in_port=3,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=2228.528s, table=0, n_packets=39, n_bytes=1794, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=CONTROLLER:65509
  cookie=0x0, duration=548.063s, table=0, n_packets=486571, n_bytes=660763418, priority=65535,ip,in_port=4,nw_dst=225.0.0.1 actions=output:3
- cookie=0x0, duration=4425.995s, table=0, n_packets=78, n_bytes=3292, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=4425.995s, table=0, n_packets=78, n_bytes=3292, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>스위치 s2에</p>
 <ul class="simple">
@@ -844,10 +886,11 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 캐스트 주소 「225.0.0.1」을 수신하는 그룹의 참여 호스트 포트 3 먼저
 존재하지 않는 것을 인식합니다.</p>
 <p>controller: c0 (root):</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 [snoop][INFO] SW=0000000000000002 PORT=3 IGMP received. [LEAVE]
 Multicast Group Removed: [225.0.0.1] querier:[4] hosts:[]
-...</pre>
+...
+</pre></div>
 </div>
 <p>위의 로그는 스위치 s2에있어서</p>
 <ul>
@@ -863,13 +906,14 @@ Multicast Group Removed: [225.0.0.1] querier:[4] hosts:[]
 <p>을 나타냅니다.</p>
 <p>이 시점에서 쿼리 기 등록 된 흐름 항목을 확인하려고합니다.</p>
 <p>switch: s1 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s1
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=89.891s, table=0, n_packets=79023, n_bytes=107313234, priority=65535,ip,in_port=2,nw_dst=225.0.0.1 actions=output:3
  cookie=0x0, duration=3823.61s, table=0, n_packets=64, n_bytes=2944, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=CONTROLLER:65509
  cookie=0x0, duration=3210.139s, table=0, n_packets=55, n_bytes=2530, priority=65535,ip,in_port=3,nw_dst=225.0.0.1 actions=CONTROLLER:65509
  cookie=0x0, duration=3823.467s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=output:4
- cookie=0x0, duration=6021.089s, table=0, n_packets=4, n_bytes=184, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=6021.089s, table=0, n_packets=4, n_bytes=184, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>쿼리 기에</p>
 <ul class="simple">
@@ -891,11 +935,12 @@ OFPST_FLOW reply (OF1.3) (xid=0x2):
 대상에서 포트 4 (스위치 s2)가 제외 된 것을 알 수 있습니다.</p>
 <p>또한 스위치 s2에 등록되어있는 흐름 항목도 확인 해 봅니다.</p>
 <p>switch: s2 (root):</p>
-<div class="console highlight-python"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
+<div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-ofctl -O openflow13 dump-flows s2
 OFPST_FLOW reply (OF1.3) (xid=0x2):
  cookie=0x0, duration=4704.052s, table=0, n_packets=0, n_bytes=0, priority=65535,ip,in_port=4,nw_dst=225.0.0.2 actions=output:2
  cookie=0x0, duration=4704.053s, table=0, n_packets=53, n_bytes=2438, priority=65535,ip,in_port=2,nw_dst=225.0.0.2 actions=CONTROLLER:65509
- cookie=0x0, duration=6750.068s, table=0, n_packets=115, n_bytes=29870, priority=0 actions=CONTROLLER:65535</pre>
+ cookie=0x0, duration=6750.068s, table=0, n_packets=115, n_bytes=29870, priority=0 actions=CONTROLLER:65535
+</pre></div>
 </div>
 <p>스위치 s2에</p>
 <ul class="simple">
@@ -1506,11 +1551,12 @@ ID</td>
 <p>이 설정은 데이터 경로 ID 「0000000000000001」의 OpenFlow 스위치가 쿼리 기
 역할을하며 멀티 캐스트 패킷의 원본으로 포트 2를 상정 한 후로엔
 트리 등록 할 수 있습니다.</p>
-<div class="sourcecode highlight-python"><pre># ...
-    self._snoop = kwargs['igmplib']
+<div class="sourcecode highlight-python"><div class="highlight"><pre># ...
+    self._snoop = kwargs[&#39;igmplib&#39;]
     self._snoop.set_querier_mode(
-        dpid=str_to_dpid('0000000000000001'), server_port=2)
-# ...</pre>
+        dpid=str_to_dpid(&#39;0000000000000001&#39;), server_port=2)
+# ...
+</pre></div>
 </div>
 </div>
 <div class="section" id="id22">

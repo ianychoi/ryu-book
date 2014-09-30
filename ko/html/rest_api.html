@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -15,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -369,7 +367,7 @@ JSON으로 변환 호출자에게 반환합니다.</p>
 <p>먼저 「 <a class="reference internal" href="switching_hub.html#ch-switching-hub"><em>스위칭 허브</em></a> 」와 같이 Mininet를 실행합니다. 여기서도
 스위치 OpenFlow 버전에 OpenFlow13을 설정하는 것을 잊지 마십시오.
 이어 REST API를 추가 한 스위칭 허브를 시작합니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~/ryu/ryu/app$ cd ~/ryu/ryu/app
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~/ryu/ryu/app$ cd ~/ryu/ryu/app
 ryu@ryu-vm:~/ryu/ryu/app$ sudo ovs-vsctl set Bridge s1 protocols=OpenFlow13
 ryu@ryu-vm:~/ryu/ryu/app$ ryu-manager --verbose ./simple_switch_rest_13.py
 loading app ./simple_switch_rest_13.py
@@ -381,83 +379,91 @@ BRICK SimpleSwitchRest13
   CONSUMES EventOFPPacketIn
   CONSUMES EventOFPSwitchFeatures
 BRICK ofp_event
-  PROVIDES EventOFPPacketIn TO {'SimpleSwitchRest13': set(['main'])}
-  PROVIDES EventOFPSwitchFeatures TO {'SimpleSwitchRest13': set(['config'])}
+  PROVIDES EventOFPPacketIn TO {&#39;SimpleSwitchRest13&#39;: set([&#39;main&#39;])}
+  PROVIDES EventOFPSwitchFeatures TO {&#39;SimpleSwitchRest13&#39;: set([&#39;config&#39;])}
   CONSUMES EventOFPErrorMsg
   CONSUMES EventOFPPortDescStatsReply
   CONSUMES EventOFPEchoRequest
   CONSUMES EventOFPSwitchFeatures
   CONSUMES EventOFPHello
 (31135) wsgi starting up on http://0.0.0.0:8080/
-connected socket:&lt;eventlet.greenio.GreenSocket object at 0x318c6d0&gt; address:('127.0.0.1', 48914)
+connected socket:&lt;eventlet.greenio.GreenSocket object at 0x318c6d0&gt; address:(&#39;127.0.0.1&#39;, 48914)
 hello ev &lt;ryu.controller.ofp_event.EventOFPHello object at 0x318cc10&gt;
 move onto config mode
 EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPSwitchFeatures
 switch features ev version: 0x4 msg_type 0x6 xid 0x78dd7a72 OFPSwitchFeatures(auxiliary_id=0,capabilities=71,datapath_id=1,n_buffers=256,n_tables=254)
-move onto main mode</pre>
+move onto main mode
+</pre></div>
 </div>
 <p>시작 메시지에 &#8220;(31135) wsgi starting up on <a class="reference external" href="http://0.0.0.0:8080/">http://0.0.0.0:8080/</a>&#8220;줄이 있습니다 만,
 이것은 Web 서버가 포트 번호 8080으로 시작했음을 나타냅니다.</p>
 <p>다음 mininet 쉘에서 h1에서 h2로 ping을 실행합니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; h1 ping -c 1 h2
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; h1 ping -c 1 h2
 PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 64 bytes from 10.0.0.2: icmp_req=1 ttl=64 time=84.1 ms
 
 --- 10.0.0.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 84.171/84.171/84.171/0.000 ms</pre>
+rtt min/avg/max/mdev = 84.171/84.171/84.171/0.000 ms
+</pre></div>
 </div>
 <p>이때 Ryu의 Packet-In은 3 회 발생하고 있습니다.</p>
-<div class="console highlight-python"><pre>EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPPacketIn
+<div class="console highlight-python"><div class="highlight"><pre>EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPPacketIn
 packet in 1 00:00:00:00:00:01 ff:ff:ff:ff:ff:ff 1
 EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPPacketIn
 packet in 1 00:00:00:00:00:02 00:00:00:00:00:01 2
 EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPPacketIn
-packet in 1 00:00:00:00:00:01 00:00:00:00:00:02 1</pre>
+packet in 1 00:00:00:00:00:01 00:00:00:00:00:02 1
+</pre></div>
 </div>
 <p>여기서, 스위칭 허브의 MAC 테이블을 검색하는 REST API를 실행하자.
 이번에는 REST API 호출에 curl 명령을 사용합니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ curl -X GET http://127.0.0.1:8080/simpleswitch/mactable/0000000000000001
-{"00:00:00:00:00:02": 2, "00:00:00:00:00:01": 1}</pre>
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ curl -X GET http://127.0.0.1:8080/simpleswitch/mactable/0000000000000001
+{&quot;00:00:00:00:00:02&quot;: 2, &quot;00:00:00:00:00:01&quot;: 1}
+</pre></div>
 </div>
 <p>h1과 h2 두 호스트가 MAC 주소 테이블에서 학습 된 것을 알 수 있습니다.</p>
 <p>이번에는 h1, h2의 두 호스트를 미리 MAC 주소 테이블에 저장하고
 ping을 실행 해 봅니다. 일단 스위칭 허브와 Mininet을 중지합니다.
 그런 다음 다시 Mininet를 시작하고 OpenFlow 버전을 OpenFlow13로 설정 후
 스위칭 허브를 시작합니다.</p>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 (26759) wsgi starting up on http://0.0.0.0:8080/
-connected socket:&lt;eventlet.greenio.GreenSocket object at 0x2afe6d0&gt; address:('127.0.0.1', 48818)
+connected socket:&lt;eventlet.greenio.GreenSocket object at 0x2afe6d0&gt; address:(&#39;127.0.0.1&#39;, 48818)
 hello ev &lt;ryu.controller.ofp_event.EventOFPHello object at 0x2afec10&gt;
 move onto config mode
 EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPSwitchFeatures
 switch features ev version: 0x4 msg_type 0x6 xid 0x96681337 OFPSwitchFeatures(auxiliary_id=0,capabilities=71,datapath_id=1,n_buffers=256,n_tables=254)
 switch_features_handler inside sub class
-move onto main mode</pre>
+move onto main mode
+</pre></div>
 </div>
 <p>그런 다음 MAC 주소 테이블 업데이트를위한 REST API를 1 호스트마다 호출합니다.
 REST API를 호출 할 때 데이터 형식은 { &#8220;mac&#8221;: &#8220;MAC 주소&#8221;, &#8220;port&#8221;: 연결 포트 번호}가되도록합니다.</p>
-<div class="console highlight-python"><pre>ryu@ryu-vm:~$ curl -X PUT -d '{"mac" : "00:00:00:00:00:01", "port" : 1}' http://127.0.0.1:8080/simpleswitch/mactable/0000000000000001
-{"00:00:00:00:00:01": 1}
-ryu@ryu-vm:~$ curl -X PUT -d '{"mac" : "00:00:00:00:00:02", "port" : 2}' http://127.0.0.1:8080/simpleswitch/mactable/0000000000000001
-{"00:00:00:00:00:02": 2, "00:00:00:00:00:01": 1}</pre>
+<div class="console highlight-python"><div class="highlight"><pre>ryu@ryu-vm:~$ curl -X PUT -d &#39;{&quot;mac&quot; : &quot;00:00:00:00:00:01&quot;, &quot;port&quot; : 1}&#39; http://127.0.0.1:8080/simpleswitch/mactable/0000000000000001
+{&quot;00:00:00:00:00:01&quot;: 1}
+ryu@ryu-vm:~$ curl -X PUT -d &#39;{&quot;mac&quot; : &quot;00:00:00:00:00:02&quot;, &quot;port&quot; : 2}&#39; http://127.0.0.1:8080/simpleswitch/mactable/0000000000000001
+{&quot;00:00:00:00:00:02&quot;: 2, &quot;00:00:00:00:00:01&quot;: 1}
+</pre></div>
 </div>
 <p>이 명령을 실행하면 h1, h2에 대응 한 흐름 항목이 스위치에 등록됩니다.</p>
 <p>이어 h1에서 h2로 ping을 실행합니다.</p>
-<div class="console highlight-python"><pre>mininet&gt; h1 ping -c 1 h2
+<div class="console highlight-python"><div class="highlight"><pre>mininet&gt; h1 ping -c 1 h2
 PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 64 bytes from 10.0.0.2: icmp_req=1 ttl=64 time=4.62 ms
 
 --- 10.0.0.2 ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 4.623/4.623/4.623/0.000 ms</pre>
+rtt min/avg/max/mdev = 4.623/4.623/4.623/0.000 ms
+</pre></div>
 </div>
-<div class="console highlight-python"><pre>...
+<div class="console highlight-python"><div class="highlight"><pre>...
 move onto main mode
-(28293) accepted ('127.0.0.1', 44453)
-127.0.0.1 - - [19/Nov/2013 19:59:45] "PUT /simpleswitch/mactable/0000000000000001 HTTP/1.1" 200 124 0.002734
+(28293) accepted (&#39;127.0.0.1&#39;, 44453)
+127.0.0.1 - - [19/Nov/2013 19:59:45] &quot;PUT /simpleswitch/mactable/0000000000000001 HTTP/1.1&quot; 200 124 0.002734
 EVENT ofp_event-&gt;SimpleSwitchRest13 EventOFPPacketIn
-packet in 1 00:00:00:00:00:01 ff:ff:ff:ff:ff:ff 1</pre>
+packet in 1 00:00:00:00:00:01 ff:ff:ff:ff:ff:ff 1
+</pre></div>
 </div>
 <p>이때 스위치는 이미 흐름 항목이 존재하기 때문에 Packet-In은 h1에서 h2의 ARP 요청
 때만 발생 이후의 패킷 교환에서는 발생하지 않습니다.</p>
