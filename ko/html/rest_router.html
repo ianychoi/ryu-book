@@ -55,10 +55,9 @@
 <p>이 장에서는 REST에서 설정이 가능한
 라우터를 사용하는 방법에 대해 설명합니다.</p>
 <div class="section" id="id2">
-<h2>단일 거주자의 동작 예<a class="headerlink" href="#id2" title="제목 주소">¶</a></h2>
-<p>다음과 같은 토폴로지를 만들고 각 스
-스위치 (라우터)에 주소와 경로를 추가하거나 삭제할 각 호스트 간의 소통 가능
-여부를 확인하는 방법을 소개합니다.</p>
+<h2>단일 테넌트의 동작 예<a class="headerlink" href="#id2" title="제목 주소">¶</a></h2>
+<p>다음과 같은 토폴로지를 만들고 각 스위치 (라우터)에 주소와 경로를
+추가하거나 삭제할 각 호스트 간의 통신 가능 여부를 확인하는 방법을 소개합니다.</p>
 <a class="reference internal image-reference" href="_images/fig15.png"><img alt="_images/fig15.png" class="align-center" src="_images/fig15.png" /></a>
 <div class="section" id="id3">
 <h3>환경 구축<a class="headerlink" href="#id3" title="제목 주소">¶</a></h3>
@@ -81,11 +80,11 @@
 <tbody valign="top">
 <tr class="row-even"><td>topo</td>
 <td>linear,3</td>
-<td>3 개의 스위치가 직렬로 연결되는 토폴로지</td>
+<td>3 개의 스위치가 일렬로 연결되는 토폴로지</td>
 </tr>
 <tr class="row-odd"><td>mac</td>
 <td>없음</td>
-<td>자동으로 호스트의 MAC 주소를 설정한다</td>
+<td>자동으로 호스트의 MAC 주소를 설정</td>
 </tr>
 <tr class="row-even"><td>switch</td>
 <td>ovsk</td>
@@ -93,7 +92,7 @@
 </tr>
 <tr class="row-odd"><td>controller</td>
 <td>remote</td>
-<td>OpenFlow 컨트롤러는 외부의 것을 이용하기</td>
+<td>OpenFlow 컨트롤러는 외부의 것을 이용</td>
 </tr>
 <tr class="row-even"><td>x</td>
 <td>없음</td>
@@ -123,7 +122,7 @@ s1 s2 s3
 mininet&gt;
 </pre></div>
 </div>
-<p>또한 컨트롤러의 xterm을 또 시작해야합니다.</p>
+<p>또한 또 다른 컨트롤러의 xterm을 시작합니다.</p>
 <div class="console highlight-python"><div class="highlight"><pre>mininet&gt; xterm c0
 mininet&gt;
 </pre></div>
@@ -141,8 +140,8 @@ mininet&gt;
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ovs-vsctl set Bridge s3 protocols=OpenFlow13
 </pre></div>
 </div>
-<p>그런 다음 각 호스트에서 자동으로 할당 된 IP 주소를 삭제하고 새로운 IP 주소
-를 설정합니다.</p>
+<p>그런 다음 각 호스트에서 자동으로 할당 된 IP 주소를 삭제하고 새로운 IP 주소를
+설정합니다.</p>
 <p>host: h1:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip addr del 10.0.0.1/8 dev h1-eth0
 root@ryu-vm:~# ip addr add 172.16.20.10/24 dev h1-eth0
@@ -182,7 +181,7 @@ instantiating app ryu.controller.ofp_handler of OFPHandler
 ...
 </pre></div>
 </div>
-<p>위 로그 라우터 3 대분 표시되면 준비 완료입니다.</p>
+<p>위 로그 라우터 3 대분이 표시되면 준비 완료입니다.</p>
 </div>
 <div class="section" id="id4">
 <h3>주소 설정<a class="headerlink" href="#id4" title="제목 주소">¶</a></h3>
@@ -224,7 +223,7 @@ root@ryu-vm:~# curl -X POST -d &#39;{&quot;address&quot;: &quot;172.16.30.30/24&
 </div>
 <div class="admonition note">
 <p class="first admonition-title">주석</p>
-<p class="last">REST 명령의 실행 결과는보기 쉽도록 형성하고 있습니다.</p>
+<p class="last">REST 명령의 실행 결과는 보기 쉽도록 포맷화하였습니다.</p>
 </div>
 <p>그런 다음 라우터 s2에 주소 「172.16.10.1/24」 「172.16.30.1/24」
 「192.168.10.1/24」을 설정합니다.</p>
@@ -299,7 +298,7 @@ root@ryu-vm:~# curl -X POST -d &#39;{&quot;address&quot;: &quot;192.168.10.20/24
   ]
 </pre></div>
 </div>
-<p>라우터에 IP 주소를 할당 할 수 있기 때문에 각 호스트에 기본 게이트웨이로
+<p>라우터에 IP 주소를 할당할 수 있기 때문에 각 호스트에 기본 게이트웨이로
 등록합니다.</p>
 <p>host: h1:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 172.16.20.1
@@ -486,8 +485,8 @@ root@ryu-vm:~# curl http://localhost:8080/router/0000000000000003
   ]
 </pre></div>
 </div>
-<p>이 상태에서 ping에 의한 소통을 확인하여보십시오. 먼저 h2에서 h3에 ping을 수행합니다
-입니다. 성공적으로 소통 할 수있는 것을 확인할 수 있습니다.</p>
+<p>이 상태에서 ping에 의한 통신을 확인하여보십시오. 먼저 h2에서 h3에 ping을 수행합니다
+입니다. 성공적으로 통신하는 것을 확인할 수 있습니다.</p>
 <p>host: h2:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 192.168.30.10
 PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
@@ -498,8 +497,8 @@ PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
 ...
 </pre></div>
 </div>
-<p>또한 h2에서 h1로 ping을 실행합니다. 이쪽도 제대로 소통 할 수 있는지 확인 할 수
-입니다.</p>
+<p>또한 h2에서 h1로 ping을 실행합니다. 이쪽도 제대로 통신할 수 있는지 확인 할 수
+있습니다.</p>
 <p>host: h2:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 172.16.20.10
 PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
@@ -513,7 +512,7 @@ PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
 </div>
 <div class="section" id="id8">
 <h3>정적 경로 삭제<a class="headerlink" href="#id8" title="제목 주소">¶</a></h3>
-<p>라우터 s2에 설정 한 라우터 s3에 정적 경로를 제거합니다.</p>
+<p>라우터 s2에 설정한 라우터 s3에 정적 경로를 제거합니다.</p>
 <p>Node: c0 (root):</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# curl -X DELETE -d &#39;{&quot;route_id&quot;: &quot;2&quot;}&#39; http://localhost:8080/router/0000000000000002
   [
@@ -530,7 +529,7 @@ PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
 </pre></div>
 </div>
 <p>라우터 s2에 설정된 정보를 확인하여보십시오. 라우터 s3에 고정 경로가
-삭제 된 것을 알 수 있습니다.</p>
+삭제된 것을 알 수 있습니다.</p>
 <p>Node: c0 (root):</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# curl http://localhost:8080/router/0000000000000002
   [
@@ -565,8 +564,8 @@ PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
   ]
 </pre></div>
 </div>
-<p>이 상태에서 ping에 의한 소통을 확인하여보십시오. h2에서 h3까지는 노선 정보가 없어
-때문에 소통 할 수없는 것을 알 수 있습니다.</p>
+<p>이 상태에서 ping에 의한 통신을 확인하여보십시오. h2에서 h3까지는 노선 정보가 없어
+때문에 통신할 수 없는 것을 알 수 있습니다.</p>
 <p>host: h2:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 192.168.30.10
 PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
@@ -595,7 +594,7 @@ PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
 </pre></div>
 </div>
 <p>라우터 s1에 설정된 정보를 확인하여보십시오. 라우터 s1에 설정된 IP 주소
-중 「172.16.20.1/24」가 삭제 된 것을 알 수 있습니다.</p>
+중 「172.16.20.1/24」가 삭제된 것을 알 수 있습니다.</p>
 <p>Node: c0 (root):</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# curl http://localhost:8080/router/0000000000000001
   [
@@ -622,9 +621,9 @@ PING 192.168.30.10 (192.168.30.10) 56(84) bytes of data.
   ]
 </pre></div>
 </div>
-<p>이 상태에서 ping에 의한 소통을 확인하여보십시오. h2에서 h1으로는 h1 속한 하위
-인터넷에 대한 정보를 라우터 s1에서 삭제 되었기 때문에, 소통 할 수없는 것을 알 수
-없습니다.</p>
+<p>이 상태에서 ping에 의한 통신을 확인하여보십시오. h2에서 h1으로는 h1에 속한 하위
+인터넷에 대한 정보를 라우터 s1에서 삭제하였기 때문에, 통신할 수 없다는 사실을
+알 수 없습니다.</p>
 <p>host: h2:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 172.16.20.10
 PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
@@ -637,8 +636,8 @@ PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
 </div>
 <div class="section" id="id10">
 <h2>멀티 테넌트의 동작 예<a class="headerlink" href="#id10" title="제목 주소">¶</a></h2>
-<p>이어 VLAN에 의한 임차인 나누기가 이루어지고있는 다음과 같은 토폴로지를 만들고 각
-스위치 (라우터)에 주소와 경로를 추가하거나 삭제할 각 호스트 간의 소통
+<p>이어 VLAN에 의한 테넌트 구분이 이루어지고 있는 다음과 같은 토폴로지를 만들고 각
+스위치 (라우터)에 주소와 경로를 추가하거나 삭제할 각 호스트 간의 통신
 여부를 확인하는 방법을 소개합니다.</p>
 <a class="reference internal image-reference" href="_images/fig5.png"><img alt="_images/fig5.png" class="align-center" src="_images/fig5.png" /></a>
 <div class="section" id="id11">
@@ -670,11 +669,11 @@ PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
 </tr>
 <tr class="row-even"><td>switch</td>
 <td>ovsk</td>
-<td>Open vSwitch를 사용함</td>
+<td>Open vSwitch를 사용</td>
 </tr>
 <tr class="row-odd"><td>controller</td>
 <td>remote</td>
-<td>OpenFlow 컨트롤러는 외부의 것을 이용하기</td>
+<td>OpenFlow 컨트롤러는 외부의 것을 이용</td>
 </tr>
 <tr class="row-even"><td>x</td>
 <td>없음</td>
@@ -703,7 +702,7 @@ s1 s2 s3
 mininet&gt;
 </pre></div>
 </div>
-<p>또한 컨트롤러의 xterm을 또 시작해야합니다.</p>
+<p>또한 컨트롤러의 xterm을 하나 더 시작합니다.</p>
 <div class="console highlight-python"><div class="highlight"><pre>mininet&gt; xterm c0
 mininet&gt;
 </pre></div>
@@ -789,7 +788,7 @@ instantiating app ryu.controller.ofp_handler of OFPHandler
 ...
 </pre></div>
 </div>
-<p>위 로그 라우터 3 대분 표시되면 준비 완료입니다.</p>
+<p>위 로그 라우터 3 대분이 표시되면 준비 완료입니다.</p>
 </div>
 <div class="section" id="id12">
 <h3>주소 설정<a class="headerlink" href="#id12" title="제목 주소">¶</a></h3>
@@ -974,7 +973,7 @@ root@ryu-vm:~# curl -X POST -d &#39;{&quot;address&quot;: &quot;10.10.10.3/24&qu
   ]
 </pre></div>
 </div>
-<p>라우터에 IP 주소를 할당 할 수 있기 때문에 각 호스트에 기본 게이트웨이로
+<p>라우터에 IP 주소를 할당할 수 있기 때문에 각 호스트에 기본 게이트웨이로
 등록합니다.</p>
 <p>host: h1s1:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ip route add default via 172.16.10.1
@@ -1270,7 +1269,7 @@ root@ryu-vm:~# curl -X POST -d &#39;{&quot;gateway&quot;: &quot;10.10.10.2&quot;
   ]
 </pre></div>
 </div>
-<p>각 라우터의 설정 내용을 표로하면 다음과 같이됩니다.</p>
+<p>각 라우터의 설정 내용을 표로 나타내면 다음과 같이 됩니다.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="20%" />
@@ -1326,8 +1325,8 @@ root@ryu-vm:~# curl -X POST -d &#39;{&quot;gateway&quot;: &quot;10.10.10.2&quot;
 </tr>
 </tbody>
 </table>
-<p>h1s1에서 h1s3 대해 ping을 시도합니다. 같은 vlan_id=2의 호스트끼리이며,
-라우터 s2에 s3에게 고정 경로가 설정되어 있기 때문에 소통이 가능합니다.</p>
+<p>h1s1에서 h1s3에 대해 ping을 시도합니다. 같은 vlan_id=2의 호스트끼리이며,
+라우터 s2에 s3에게 고정 경로가 설정되어 있기 때문에 통신이 가능합니다.</p>
 <p>host: h1s1:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 172.16.20.10
 PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
@@ -1338,7 +1337,7 @@ PING 172.16.20.10 (172.16.20.10) 56(84) bytes of data.
 </pre></div>
 </div>
 <p>h2s1에서 h2s3 대해 ping을 시도합니다. 같은 vlan_id=110 호스트끼리이지만,
-라우터 s2에 s3에게 고정 경로가 설정되어 있지 않기 때문에 소통이 불가능합니다.</p>
+라우터 s2에 s3에게 고정 경로가 설정되어 있지 않기 때문에 통신이 불가능합니다.</p>
 <p>host: h2s1:</p>
 <div class="console highlight-python"><div class="highlight"><pre>root@ryu-vm:~# ping 172.16.20.11
 PING 172.16.20.11 (172.16.20.11) 56(84) bytes of data.
@@ -1353,7 +1352,7 @@ PING 172.16.20.11 (172.16.20.11) 56(84) bytes of data.
 </div>
 <div class="section" id="rest-api">
 <h2>REST API 목록<a class="headerlink" href="#rest-api" title="제목 주소">¶</a></h2>
-<p>이 장에서 소개 한 rest_router의 REST API를 나열합니다.</p>
+<p>이 장에서 소개한 rest_router의 REST API를 나열합니다.</p>
 <div class="section" id="id15">
 <h3>설정 가져오기<a class="headerlink" href="#id15" title="제목 주소">¶</a></h3>
 <table border="1" class="docutils">
@@ -1523,7 +1522,7 @@ PING 172.16.20.11 (172.16.20.11) 56(84) bytes of data.
   <h3><a href="index.html">목차</a></h3>
   <ul>
 <li><a class="reference internal" href="#">라우터</a><ul>
-<li><a class="reference internal" href="#id2">단일 거주자의 동작 예</a><ul>
+<li><a class="reference internal" href="#id2">단일 테넌트의 동작 예</a><ul>
 <li><a class="reference internal" href="#id3">환경 구축</a></li>
 <li><a class="reference internal" href="#id4">주소 설정</a></li>
 <li><a class="reference internal" href="#id5">기본 경로 설정</a></li>
